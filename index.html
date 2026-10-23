@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DuoReinas - Domina la Práctica 1 de SSII para el 10</title>
+  <style>
+    :root {
+      --duo-green: #58cc02;
+      --duo-green-dark: #46a302;
+      --duo-green-light: #d7ffb8;
+      --duo-green-border: #b8f28b;
+      
+      --duo-red: #ff4b4b;
+      --duo-red-dark: #ea2b2b;
+      --duo-red-light: #ffdfe0;
+      
+      --duo-blue: #1cb0f6;
+      --duo-blue-dark: #1899d6;
+      --duo-blue-light: #ddf4ff;
+      
+      --duo-yellow: #ffc800;
+      --duo-yellow-dark: #e5a500;
+      --duo-yellow-light: #fff5c0;
+      
+      --duo-purple: #ce82ff;
+      --duo-purple-dark: #a55eea;
+      
+      --duo-gray-bg: #f7f7f7;
+      --duo-card-bg: #ffffff;
+      --duo-border: #e5e5e5;
+      --duo-border-dark: #cecece;
+      --duo-text: #3c3c3c;
+      --duo-text-secondary: #777777;
+      --duo-text-muted: #afafaf;
+      
+      --font-family: 'DIN Round Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--duo-gray-bg);
+      color: var(--duo-text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      background: #ffffff;
+      border-bottom: 2px solid var(--duo-border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .owl-logo {
+      width: 40px;
+      height: 40px;
+      background: var(--duo-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 0 var(--duo-green-dark);
+      transition: transform 0.1s;
+    }
+
+    .owl-logo:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 var(--duo-green-dark);
+    }
+
+    .app-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--duo-green);
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .app-title span.tag {
+      background: var(--duo-yellow);
+      color: #795548;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 8px;
+      border-bottom: 2px solid var(--duo-yellow-dark);
+    }
+
+    .stats-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .stat-badge:hover {
+      background-color: #f0f0f0;
+    }
+
+    .stat-streak { color: #ff9600; }
+    .stat-xp { color: var(--duo-yellow-dark); }
+    .stat-hearts { color: var(--duo-red); }
+    .stat-failed { color: var(--duo-purple-dark); }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-tab-btn {
+      padding: 8px 16px;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--duo-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-tab-btn:hover {
+      background: #f0f0f0;
+      color: var(--duo-text);
+    }
+
+    .nav-tab-btn.active {
+      background: var(--duo-blue-light);
+      color: var(--duo-blue-dark);
+      border-color: var(--duo-blue);
+    }
+
+    .sound-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+    }
+
+    /* Main Container */
+    .main-wrapper {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 16px 80px 16px;
+      flex: 1;
+    }
+
+    /* 3D Button Style */
+    .btn-3d {
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 28px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      outline: none;
+    }
+
+    .btn-3d:active:not(:disabled) {
+      transform: translateY(4px);
+    }
+
+    .btn-green {
+      background-color: var(--duo-green);
+      color: #ffffff;
+      box-shadow: 0 5px 0 var(--duo-green-dark);
+    }
+    .btn-green:hover:not(:disabled) {
+      background-color: #61e002;
+    }
+    .btn-green:active:not(:disabled) {
+      box-shadow: 0 1px 0 var(--duo-green-dark);
+    }
+
+    .btn-blue {
+      background-color: var(--duo-blue);
+      color: #ffffff;
+      box-shadow: 0 5px 0 var(--duo-blue-dark);
+    }
+    .btn-blue:hover:not(:disabled) {
+      background-color: #2ec5ff;
+    }
+    .btn-blue:active:not(:disabled) {
+      box-shadow: 0 1px 0 var(--duo-blue-dark);
+    }
+
+    .btn-red {
+      background-color: var(--duo-red);
+      color: #ffffff;
+      box-shadow: 0 5px 0 var(--duo-red-dark);
+    }
+    .btn-red:active:not(:disabled) {
+      box-shadow: 0 1px 0 var(--duo-red-dark);
+    }
+
+    .btn-gray {
+      background-color: #e5e5e5;
+      color: #afafaf;
+      box-shadow: 0 5px 0 #cecece;
+      cursor: not-allowed;
+    }
+
+    .btn-purple {
+      background-color: var(--duo-purple);
+      color: #ffffff;
+      box-shadow: 0 5px 0 var(--duo-purple-dark);
+    }
+    .btn-purple:active:not(:disabled) {
+      box-shadow: 0 1px 0 var(--duo-purple-dark);
+    }
+
+    .btn-yellow {
+      background-color: var(--duo-yellow);
+      color: #5c3b00;
+      box-shadow: 0 5px 0 var(--duo-yellow-dark);
+    }
+    .btn-yellow:active:not(:disabled) {
+      box-shadow: 0 1px 0 var(--duo-yellow-dark);
+    }
+
+    /* ============================================================
+       VIEW 1: RUTA DE APRENDIZAJE (PATH)
+       ============================================================ */
+    .path-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      padding: 10px 0 40px 0;
+    }
+
+    .unit-banner {
+      width: 100%;
+      background: linear-gradient(135deg, var(--duo-green), #42a502);
+      border-radius: 18px;
+      color: white;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 6px 0 var(--duo-green-dark);
+      margin-bottom: 12px;
+    }
+
+    .unit-banner.banner-purple {
+      background: linear-gradient(135deg, var(--duo-purple), #9b51e0);
+      box-shadow: 0 6px 0 var(--duo-purple-dark);
+    }
+
+    .unit-banner.banner-blue {
+      background: linear-gradient(135deg, var(--duo-blue), #0b8ecb);
+      box-shadow: 0 6px 0 var(--duo-blue-dark);
+    }
+
+    .unit-banner.banner-gold {
+      background: linear-gradient(135deg, #ffc800, #ff9600);
+      box-shadow: 0 6px 0 #d87e00;
+      color: #4a2800;
+    }
+
+    .unit-banner-content h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .unit-banner-content p {
+      font-size: 14px;
+      opacity: 0.95;
+    }
+
+    .unit-progress-tag {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    /* Node Circle Stepping Stones */
+    .path-nodes {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      width: 100%;
+      position: relative;
+    }
+
+    .node-row {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Zigzag offsets */
+    .node-row:nth-child(4n+1) { transform: translateX(0px); }
+    .node-row:nth-child(4n+2) { transform: translateX(-40px); }
+    .node-row:nth-child(4n+3) { transform: translateX(0px); }
+    .node-row:nth-child(4n+4) { transform: translateX(40px); }
+
+    .node-circle-btn {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      border: none;
+      background: var(--duo-green);
+      box-shadow: 0 8px 0 var(--duo-green-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.1s ease;
+    }
+
+    .node-circle-btn:active {
+      transform: translateY(6px);
+      box-shadow: 0 2px 0 var(--duo-green-dark);
+    }
+
+    .node-circle-btn.locked {
+      background: #e5e5e5;
+      box-shadow: 0 8px 0 #cecece;
+      color: #afafaf;
+      cursor: not-allowed;
+    }
+    .node-circle-btn.locked:active {
+      transform: none;
+      box-shadow: 0 8px 0 #cecece;
+    }
+
+    .node-circle-btn.completed {
+      background: var(--duo-yellow);
+      box-shadow: 0 8px 0 var(--duo-yellow-dark);
+      color: #5c3b00;
+    }
+
+    .node-circle-btn.final-exam {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #ffc800, #ff4b4b);
+      box-shadow: 0 10px 0 #b32525;
+      font-size: 42px;
+    }
+
+    .node-tooltip {
+      position: absolute;
+      bottom: -30px;
+      white-space: nowrap;
+      background: white;
+      border: 2px solid var(--duo-border);
+      border-radius: 10px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--duo-text);
+      box-shadow: 0 3px 0 var(--duo-border);
+    }
+
+    .node-stars {
+      position: absolute;
+      top: -12px;
+      background: white;
+      border: 2px solid var(--duo-yellow);
+      border-radius: 12px;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--duo-yellow-dark);
+    }
+
+    /* ============================================================
+       VIEW 2: BAÚL DE REPASO (SPACED REPETITION)
+       ============================================================ */
+    .review-vault-container {
+      background: white;
+      border: 2px solid var(--duo-border);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 6px 0 var(--duo-border);
+    }
+
+    .vault-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .vault-title {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: var(--duo-text);
+    }
+
+    .vault-desc {
+      font-size: 15px;
+      color: var(--duo-text-secondary);
+      max-width: 600px;
+      margin: 0 auto 24px auto;
+      line-height: 1.5;
+    }
+
+    .vault-stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .vault-stat-card {
+      background: var(--duo-gray-bg);
+      border: 2px solid var(--duo-border);
+      border-radius: 16px;
+      padding: 16px 24px;
+      min-width: 140px;
+    }
+
+    .vault-stat-card .num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--duo-purple-dark);
+    }
+
+    .vault-stat-card .lbl {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--duo-text-secondary);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .failed-item-list {
+      text-align: left;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .failed-item-card {
+      border: 2px solid var(--duo-border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fafafa;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .failed-item-card:hover {
+      border-color: var(--duo-purple);
+      background: #fbf7ff;
+    }
+
+    .failed-item-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--duo-purple-dark);
+    }
+
+    .failed-item-question {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--duo-text);
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       VIEW 3: GARANTÍA DE DIEZ (DASHBOARD)
+       ============================================================ */
+    .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mastery-hero {
+      background: white;
+      border: 2px solid var(--duo-border);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 6px 0 var(--duo-border);
+    }
+
+    .mastery-score-circle {
+      position: relative;
+      width: 140px;
+      height: 140px;
+    }
+
+    .circle-bg {
+      fill: none;
+      stroke: #e5e5e5;
+      stroke-width: 12;
+    }
+
+    .circle-progress {
+      fill: none;
+      stroke: var(--duo-green);
+      stroke-width: 12;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dasharray 0.8s ease;
+    }
+
+    .circle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .circle-text .grade {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--duo-text);
+      line-height: 1;
+    }
+
+    .circle-text .max {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--duo-text-muted);
+    }
+
+    .hero-text h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--duo-text);
+      margin-bottom: 8px;
+    }
+
+    .hero-text p {
+      font-size: 15px;
+      color: var(--duo-text-secondary);
+      line-height: 1.5;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      background: white;
+      border: 2px solid var(--duo-border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 0 var(--duo-border);
+    }
+
+    .metric-card .label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--duo-text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .metric-card .value {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--duo-text);
+    }
+
+    .unit-breakdown-card {
+      background: white;
+      border: 2px solid var(--duo-border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 5px 0 var(--duo-border);
+    }
+
+    .unit-breakdown-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .unit-progress-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .unit-progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 14px;
+      background: #e5e5e5;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--duo-green);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    /* Certificate Box */
+    .certificate-box {
+      background: linear-gradient(135deg, #fff9e6, #fff2cc);
+      border: 3px dashed var(--duo-yellow-dark);
+      border-radius: 20px;
+      padding: 28px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .certificate-box h2 {
+      color: #795548;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    /* ============================================================
+       VIEW 4: CHULETA RÁPIDA (CHEAT SHEET)
+       ============================================================ */
+    .cheatsheet-container {
+      background: white;
+      border: 2px solid var(--duo-border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 6px 0 var(--duo-border);
+    }
+
+    .formula-card {
+      background: var(--duo-gray-bg);
+      border-left: 6px solid var(--duo-blue);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .formula-title {
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--duo-blue-dark);
+      margin-bottom: 6px;
+    }
+
+    .formula-code {
+      font-family: 'Consolas', monospace;
+      background: #2b2b2b;
+      color: #61e002;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      display: block;
+      margin: 8px 0;
+    }
+
+    /* ============================================================
+       QUIZ SESSION VIEW (EL EJERCICIO DUOLINGO)
+       ============================================================ */
+    .quiz-view-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+      z-index: 1000;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .quiz-header {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .quiz-close-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: #afafaf;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+    }
+
+    .quiz-close-btn:hover {
+      color: var(--duo-text);
+    }
+
+    .quiz-progress-bar-bg {
+      flex: 1;
+      height: 16px;
+      background: #e5e5e5;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .quiz-progress-bar-fill {
+      height: 100%;
+      background: var(--duo-green);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .quiz-hearts {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--duo-red);
+    }
+
+    .quiz-content-area {
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 20px 140px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quiz-unit-pill {
+      display: inline-block;
+      align-self: flex-start;
+      background: var(--duo-blue-light);
+      color: var(--duo-blue-dark);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    .quiz-question-text {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--duo-text);
+      margin-bottom: 28px;
+    }
+
+    /* Options List */
+    .quiz-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .quiz-option-card {
+      background: white;
+      border: 2px solid var(--duo-border);
+      border-radius: 16px;
+      box-shadow: 0 4px 0 var(--duo-border);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      position: relative;
+    }
+
+    .quiz-option-card:hover:not(.locked) {
+      background-color: #f7f7f7;
+      border-color: #d0d0d0;
+    }
+
+    .quiz-option-card:active:not(.locked) {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 var(--duo-border);
+    }
+
+    .quiz-option-card.selected {
+      background-color: var(--duo-blue-light);
+      border-color: var(--duo-blue);
+      box-shadow: 0 4px 0 var(--duo-blue-dark);
+      color: var(--duo-blue-dark);
+    }
+
+    .quiz-option-card.correct-highlight {
+      background-color: var(--duo-green-light) !important;
+      border-color: var(--duo-green) !important;
+      box-shadow: 0 4px 0 var(--duo-green-dark) !important;
+      color: #276702 !important;
+    }
+
+    .quiz-option-card.wrong-highlight {
+      background-color: var(--duo-red-light) !important;
+      border-color: var(--duo-red) !important;
+      box-shadow: 0 4px 0 var(--duo-red-dark) !important;
+      color: #9c1515 !important;
+    }
+
+    .option-key-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 2px solid var(--duo-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--duo-text-secondary);
+      flex-shrink: 0;
+      background: white;
+    }
+
+    .quiz-option-card.selected .option-key-badge {
+      border-color: var(--duo-blue);
+      color: var(--duo-blue-dark);
+      background: white;
+    }
+
+    .option-label-text {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* Bottom Sticky Action Drawer (Footer) */
+    .quiz-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 2px solid var(--duo-border);
+      padding: 20px;
+      z-index: 1050;
+      transition: background-color 0.2s;
+    }
+
+    .quiz-footer-content {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Shake Animation for Wrong Answers */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    .shake-card {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    /* ============================================================
+       POP-UP / MODAL EXPLICATIVO DETALLADO (SOLICITADO POR EL USUARIO)
+       ============================================================ */
+    .explanation-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 2000;
+      justify-content: center;
+      align-items: flex-end; /* Slide up from bottom like Duolingo */
+      backdrop-filter: blur(3px);
+    }
+
+    .explanation-drawer {
+      background: #ffffff;
+      width: 100%;
+      max-width: 720px;
+      border-radius: 28px 28px 0 0;
+      padding: 32px 28px 36px 28px;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.25);
+      animation: slideUp 0.3s ease-out;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .drawer-header-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--duo-red-light);
+      color: var(--duo-red);
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--duo-red);
+      flex-shrink: 0;
+    }
+
+    .drawer-header-text h3 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--duo-red);
+    }
+
+    .drawer-header-text p {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--duo-text-secondary);
+    }
+
+    .correction-box {
+      background: #fdf5f5;
+      border: 2px solid #fad2d2;
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .answer-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .answer-line .icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .user-wrong-text {
+      color: #c92a2a;
+      text-decoration: line-through;
+    }
+
+    .correct-text {
+      color: #2b8a3e;
+      font-weight: 800;
+    }
+
+    /* Pedagogy Sections in Modal */
+    .drawer-section {
+      background: var(--duo-gray-bg);
+      border-radius: 16px;
+      padding: 18px 20px;
+      border: 1px solid var(--duo-border);
+    }
+
+    .drawer-section-title {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .title-explanation { color: #2f80ed; }
+    .title-concept { color: #9b51e0; }
+    .title-mnemonic { color: #f2994a; }
+
+    .drawer-section-content {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--duo-text);
+    }
+
+    .spaced-repetition-notice {
+      background: #f3f0ff;
+      border: 2px solid #d0bfff;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #5f3dc4;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Out of lives modal */
+    .out-of-lives-modal {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    /* Confetti Canvas */
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 3000;
+    }
+
+    @media (max-width: 600px) {
+      .top-nav { padding: 0 12px; }
+      .nav-tab-btn span.tab-text { display: none; }
+      .app-title span.title-long { display: none; }
+      .quiz-question-text { font-size: 18px; }
+      .explanation-drawer { padding: 20px 16px 28px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="top-nav">
+    <div class="logo-container" onclick="switchTab('path')">
+      <div class="owl-logo">🦉</div>
+      <div class="app-title">
+        <span>DUO REINAS</span>
+        <span class="tag">SSII 10/10</span>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab-btn active" id="tabBtn-path" onclick="switchTab('path')">
+        <span>🗺️</span><span class="tab-text">Ruta</span>
+      </button>
+      <button class="nav-tab-btn" id="tabBtn-vault" onclick="switchTab('vault')">
+        <span>📦</span><span class="tab-text">Repaso</span>
+      </button>
+      <button class="nav-tab-btn" id="tabBtn-dashboard" onclick="switchTab('dashboard')">
+        <span>🏆</span><span class="tab-text">Garantía 10</span>
+      </button>
+      <button class="nav-tab-btn" id="tabBtn-cheatsheet" onclick="switchTab('cheatsheet')">
+        <span>⚡</span><span class="tab-text">Chuleta</span>
+      </button>
+    </nav>
+
+    <!-- Stats & Controls -->
+    <div class="stats-container">
+      <div class="stat-badge stat-streak" title="Racha activa">
+        <span>🔥</span><span id="streakCount">1</span>
+      </div>
+      <div class="stat-badge stat-xp" title="Puntos de Experiencia">
+        <span>⚡</span><span id="xpCount">0</span>
+      </div>
+      <div class="stat-badge stat-hearts" title="Vidas restantes" onclick="showHeartsInfo()">
+        <span>❤️</span><span id="heartsCount">5</span>
+      </div>
+      <button class="sound-btn" id="soundToggleBtn" onclick="toggleSound()" title="Silenciar / Activar sonido">
+        🔊
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-wrapper">
+
+    <!-- ==================== VIEW 1: RUTA DE APRENDIZAJE ==================== -->
+    <section id="view-path" class="view-section">
+      <div class="path-container">
+        
+        <!-- Unit 1 -->
+        <div class="unit-banner banner-green">
+          <div class="unit-banner-content">
+            <h2>Unidad 1: Fundamentos y Representación</h2>
+            <p>Espacio de estados, genotipo, fenotipo y formulación del problema</p>
+          </div>
+          <div class="unit-progress-tag" id="unitProgress-1">0/8</div>
+        </div>
+        <div class="path-nodes">
+          <div class="node-row">
+            <button class="node-circle-btn" onclick="startUnit(1)">
+              <span>🧬</span>
+              <div class="node-tooltip">8 Preguntas Clave</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Unit 2 -->
+        <div class="unit-banner banner-blue">
+          <div class="unit-banner-content">
+            <h2>Unidad 2: Operadores Genéticos</h2>
+            <p>Selección por Ruleta/Torneo, Cruces 1/2 Puntos, Mutación Swap vs Flip-Bit</p>
+          </div>
+          <div class="unit-progress-tag" id="unitProgress-2">0/12</div>
+        </div>
+        <div class="path-nodes">
+          <div class="node-row">
+            <button class="node-circle-btn" onclick="startUnit(2)">
+              <span>🎲</span>
+              <div class="node-tooltip">12 Preguntas Operadores</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Unit 3 -->
+        <div class="unit-banner banner-purple">
+          <div class="unit-banner-content">
+            <h2>Unidad 3: Ajuste de Parámetros</h2>
+            <p>Población, probabilidades pc y pm, elitismo, presiones selectivas y convergencia</p>
+          </div>
+          <div class="unit-progress-tag" id="unitProgress-3">0/8</div>
+        </div>
+        <div class="path-nodes">
+          <div class="node-row">
+            <button class="node-circle-btn" onclick="startUnit(3)">
+              <span>⚖️</span>
+              <div class="node-tooltip">8 Preguntas Ajuste</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Unit 4 -->
+        <div class="unit-banner banner-green">
+          <div class="unit-banner-content">
+            <h2>Unidad 4: Manual de Asignación y Fórmulas</h2>
+            <p>Fitness, Función Objetivo, Coste, Jaques Diagonales y valores normativos</p>
+          </div>
+          <div class="unit-progress-tag" id="unitProgress-4">0/8</div>
+        </div>
+        <div class="path-nodes">
+          <div class="node-row">
+            <button class="node-circle-btn" onclick="startUnit(4)">
+              <span>📐</span>
+              <div class="node-tooltip">8 Preguntas Manual</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Unit 5 -->
+        <div class="unit-banner banner-blue">
+          <div class="unit-banner-content">
+            <h2>Unidad 5: Los 4 Criterios de IA</h2>
+            <p>Completitud, Optimalidad, Complejidad Temporal y Complejidad Espacial</p>
+          </div>
+          <div class="unit-progress-tag" id="unitProgress-5">0/8</div>
+        </div>
+        <div class="path-nodes">
+          <div class="node-row">
+            <button class="node-circle-btn" onclick="startUnit(5)">
+              <span>🧠</span>
+              <div class="node-tooltip">8 Preguntas Criterios IA</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Unit 6 -->
+        <div class="unit-banner banner-purple">
+          <div class="unit-banner-content">
+            <h2>Unidad 6: Código C++ y GAlib</h2>
+            <p>Estructura de AG--n-reinas.cpp, GASteadyStateGA, métodos y validación</p>
+          </div>
+          <div class="unit-progress-tag" id="unitProgress-6">0/8</div>
+        </div>
+        <div class="path-nodes">
+          <div class="node-row">
+            <button class="node-circle-btn" onclick="startUnit(6)">
+              <span>💻</span>
+              <div class="node-tooltip">8 Preguntas C++ GAlib</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Final Boss / Exam Simulator -->
+        <div class="unit-banner banner-gold">
+          <div class="unit-banner-content">
+            <h2>Gran Simulacro Examen 10/10</h2>
+            <p>20 Preguntas aleatorias de todo el temario en condiciones reales de examen</p>
+          </div>
+          <div class="unit-progress-tag" id="examSimulatorScore">Prueba Final</div>
+        </div>
+        <div class="path-nodes">
+          <div class="node-row">
+            <button class="node-circle-btn final-exam" onclick="startExamSimulator()">
+              <span>🏆</span>
+              <div class="node-tooltip">Simulador Oficial Control P1</div>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: BAÚL DE REPASO ==================== -->
+    <section id="view-vault" class="view-section" style="display: none;">
+      <div class="review-vault-container">
+        <div class="vault-icon">📦</div>
+        <h2 class="vault-title">Baúl de Repaso Inteligente</h2>
+        <p class="vault-desc">
+          Aquí se almacenan automáticamente todas las preguntas en las que hayas fallado.
+          Utilizamos el método de <strong>Repetición Espaciada</strong>: acertar una pregunta en este modo
+          la gradúa de tu lista de fallos y te recupera <strong>+1 corazón ❤️</strong>.
+        </p>
+
+        <div class="vault-stats">
+          <div class="vault-stat-card">
+            <div class="num" id="vaultCount">0</div>
+            <div class="lbl">Pendientes de Fijar</div>
+          </div>
+          <div class="vault-stat-card">
+            <div class="num" id="vaultGraduatedCount">0</div>
+            <div class="lbl">Graduadas con Éxito</div>
+          </div>
+        </div>
+
+        <button class="btn-3d btn-purple" id="btnStartVault" onclick="startVaultReview()" style="font-size: 18px; padding: 16px 36px;">
+          <span>🔁</span> REPASAR PREGUNTAS FALLADAS AHORA
+        </button>
+
+        <div class="failed-item-list" id="failedItemList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: GARANTÍA DE DIEZ ==================== -->
+    <section id="view-dashboard" class="view-section" style="display: none;">
+      <div class="dashboard-container">
+        
+        <div class="mastery-hero">
+          <div class="hero-text">
+            <h1>Garantía de Diez (10 / 10)</h1>
+            <p>
+              Sistema de auditoría de competencia académica. Cuando alcances el <strong>100% de dominio</strong>
+              en los 52 conceptos clave, tendrás el conocimiento exacto para obtener la máxima nota en el Control P1.
+            </p>
+          </div>
+          <div class="mastery-score-circle">
+            <svg viewBox="0 0 100 100" width="140" height="140">
+              <circle class="circle-bg" cx="50" cy="50" r="40" />
+              <circle class="circle-progress" id="heroProgressCircle" cx="50" cy="50" r="40" stroke-dasharray="0 251.2" />
+            </svg>
+            <div class="circle-text">
+              <div class="grade" id="heroGradeText">0.0</div>
+              <div class="max">/ 10.0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="label">Preguntas Dominadas</div>
+            <div class="value"><span id="metricMastered" style="color: var(--duo-green-dark)">0</span> / 52</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">En Proceso de Repaso</div>
+            <div class="value"><span id="metricInReview" style="color: var(--duo-purple)">0</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Precisión Global</div>
+            <div class="value"><span id="metricAccuracy" style="color: var(--duo-blue-dark)">0%</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Simulacros Aprobados</div>
+            <div class="value"><span id="metricSimulators" style="color: var(--duo-yellow-dark)">0</span></div>
+          </div>
+        </div>
+
+        <!-- Unit by Unit Mastery -->
+        <div class="unit-breakdown-card">
+          <h3>Dominio por Unidad Temática</h3>
+          <div id="unitBreakdownList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Certification -->
+        <div class="certificate-box" id="certificateBox">
+          <h2>🎓 Certificado de Preparación 10/10</h2>
+          <p id="certificateMsg">
+            Completa las 52 preguntas y aprueba el Simulacro de Examen con al menos un 90% para desbloquear tu sello de Garantía de Diez.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: CHULETA RÁPIDA ==================== -->
+    <section id="view-cheatsheet" class="view-section" style="display: none;">
+      <div class="cheatsheet-container">
+        <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 20px;">⚡ Chuleta de Fórmulas y Reglas de Oro</h2>
+        
+        <div class="formula-card">
+          <div class="formula-title">1. Número Máximo de Jaques en N Reinas</div>
+          <p>Dos reinas cualesquiera pueden atacarse. El número de pares posibles es combinatorio de N sobre 2:</p>
+          <code class="formula-code">Max_Jaques = N * (N - 1) / 2</code>
+          <p style="font-size: 13px; color: var(--duo-text-secondary); margin-top: 4px;">
+            Ejemplos: N=8 ➔ 28 jaques máx; N=23 ➔ 253 jaques máx; N=73 ➔ 2628 jaques máx.
+          </p>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-title">2. Detección de Jaque Diagonal (Clave de Programación C++)</div>
+          <p>Dos reinas en (f1, c1) y (f2, c2) están en la misma diagonal si y solo si la diferencia de filas en valor absoluto es igual a la diferencia de columnas:</p>
+          <code class="formula-code">abs(f1 - f2) == abs(c1 - c2)</code>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-title">3. Parámetros del Manual de Asignación (Mención Obligatoria)</div>
+          <code class="formula-code">p_cruce = 0.9 (90%)  |  p_mutacion = 0.001 (0.1%)  |  Pop = 30-100</code>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-title">4. Los 4 Criterios de Evaluación en Inteligencia Artificial</div>
+          <ul style="margin-left: 20px; line-height: 1.6; font-size: 14px;">
+            <li><strong>Completitud:</strong> NO es completo sistemáticamente (es estocástico/probabilístico).</li>
+            <li><strong>Optimalidad:</strong> NO garantiza optimalidad en tiempo finito, pero es asintóticamente óptimo.</li>
+            <li><strong>Complejidad Temporal:</strong> <code>O(g * p * n^2)</code> (g: generaciones, p: población, n: reinas).</li>
+            <li><strong>Complejidad Espacial:</strong> <code>O(p * n)</code> (Excelente, solo guarda la población activa).</li>
+          </ul>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-title">5. Steady-State GA vs Simple GA</div>
+          <p>El algoritmo implementado usa <strong>GASteadyStateGA</strong>, lo que implica reemplazo continuo y elitismo inherente: la mejor solución nunca se destruye accidentalmente.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== QUIZ OVERLAY SCREEN (DUOLINGO SESSION) ==================== -->
+  <div class="quiz-view-overlay" id="quizOverlay">
+    
+    <!-- Header -->
+    <div class="quiz-header">
+      <button class="quiz-close-btn" onclick="exitQuiz()" title="Abandonar sesión">✕</button>
+      <div class="quiz-progress-bar-bg">
+        <div class="quiz-progress-bar-fill" id="quizProgressBar"></div>
+      </div>
+      <div class="quiz-hearts" id="quizHeartsDisplay">
+        <span>❤️</span><span id="quizHeartsNum">5</span>
+      </div>
+    </div>
+
+    <!-- Question Body -->
+    <div class="quiz-content-area">
+      <div class="quiz-unit-pill" id="quizUnitPill">UNIDAD 1</div>
+      <div class="quiz-question-text" id="quizQuestionText">Cargando pregunta...</div>
+
+      <div class="quiz-options-list" id="quizOptionsList">
+        <!-- Rendered options -->
+      </div>
+    </div>
+
+    <!-- Bottom Sticky Footer -->
+    <div class="quiz-footer" id="quizFooter">
+      <div class="quiz-footer-content">
+        <div id="footerFeedbackText" style="display: none; font-weight: 800; font-size: 18px;">
+          <!-- Will show correct feedback -->
+        </div>
+        <button class="btn-3d btn-gray" id="btnCheckAnswer" onclick="handleFooterAction()">
+          COMPROBAR
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==================== POP-UP MODAL EXPLICATIVO (EN CASO DE FALLO) ==================== -->
+  <div class="explanation-modal-overlay" id="explanationModal">
+    <div class="explanation-drawer">
+      
+      <div class="drawer-header">
+        <div class="drawer-header-icon">✕</div>
+        <div class="drawer-header-text">
+          <h3>¡Solución Incorrecta!</h3>
+          <p>Aprende de este fallo para no repetirlo en el examen:</p>
+        </div>
+      </div>
+
+      <!-- Correction comparison -->
+      <div class="correction-box">
+        <div class="answer-line">
+          <span class="icon">❌</span>
+          <div>
+            <div style="font-size: 12px; font-weight: 800; color: #c92a2a; text-transform: uppercase;">Tu respuesta:</div>
+            <div class="user-wrong-text" id="modalUserAnswer">Opción seleccionada</div>
+          </div>
+        </div>
+        <div class="answer-line">
+          <span class="icon">✅</span>
+          <div>
+            <div style="font-size: 12px; font-weight: 800; color: #2b8a3e; text-transform: uppercase;">Respuesta correcta:</div>
+            <div class="correct-text" id="modalCorrectAnswer">Opción correcta esperada</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Explanation -->
+      <div class="drawer-section">
+        <div class="drawer-section-title title-explanation">
+          <span>💡</span> Explicación Detallada del Ejercicio
+        </div>
+        <div class="drawer-section-content" id="modalExplanation">
+          Explicación pedagógica paso a paso...
+        </div>
+      </div>
+
+      <!-- Core Concept -->
+      <div class="drawer-section">
+        <div class="drawer-section-title title-concept">
+          <span>📚</span> Concepto Teórico Necesario
+        </div>
+        <div class="drawer-section-content" id="modalConcept">
+          Concepto clave...
+        </div>
+      </div>
+
+      <!-- Mnemonic / Exam Trick -->
+      <div class="drawer-section">
+        <div class="drawer-section-title title-mnemonic">
+          <span>🎯</span> Regla Mnemotécnica para el Examen
+        </div>
+        <div class="drawer-section-content" id="modalMnemonic">
+          Truco mnemotécnico...
+        </div>
+      </div>
+
+      <!-- Spaced Repetition Box Notice -->
+      <div class="spaced-repetition-notice">
+        <span style="font-size: 20px;">🔁</span>
+        <span>
+          <strong>Guardado en tu Baúl de Repaso:</strong> Esta pregunta volverá a aparecer más adelante en esta sesión y en tu baúl para asegurar que la domines.
+        </span>
+      </div>
+
+      <!-- Close Drawer Button -->
+      <button class="btn-3d btn-red" onclick="closeExplanationModal()" style="width: 100%; font-size: 17px;">
+        ENTENDIDO, VAMOS A SUPERARLA
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Out of Lives Modal -->
+  <div class="explanation-modal-overlay" id="outOfLivesModal" style="align-items: center;">
+    <div class="out-of-lives-modal">
+      <div style="font-size: 54px; margin-bottom: 12px;">💔</div>
+      <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">¡Te has quedado sin vidas!</h2>
+      <p style="font-size: 15px; color: var(--duo-text-secondary); margin-bottom: 24px;">
+        No te preocupes. Puedes recargar tus vidas repasando preguntas en tu Baúl de Repaso o activar la práctica libre.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button class="btn-3d btn-purple" onclick="exitAndGoToVault()">
+          <span>📦</span> IR AL BAÚL DE REPASO (+1 ❤️ POR ACIERTO)
+        </button>
+        <button class="btn-3d btn-green" onclick="refillHeartsFree()">
+          <span>❤️</span> RECARGAR VIDAS AHORA (MODO ESTUDIO)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <script>
+    /* ============================================================
+       BANCO DE PREGUNTAS (52 PREGUNTAS CLAVE DE ALTO RENDIMIENTO)
+       ============================================================ */
+    const ALL_QUESTIONS = [{"id": 1, "unit": 1, "unit_name": "Fundamentos y Representación", "question": "¿En qué se diferencia fundamentalmente un Algoritmo Genético de otras técnicas de búsqueda local como la Ascensión de Colinas (Hill Climbing)?", "options": ["El AG opera sobre un único estado en cada momento, mientras que Hill Climbing usa varios.", "El AG mantiene y evoluciona concurrentemente una población de soluciones candidatas, mientras que Hill Climbing trabaja con un único estado.", "El AG garantiza siempre encontrar el óptimo global de forma determinista y sin azar.", "El AG solo puede resolver problemas con variables reales continuas."], "correct": 1, "explanation": "Los algoritmos de búsqueda local tradicionales (como Hill Climbing) exploran el espacio moviéndose desde un solo estado actual a su mejor vecino. Un Algoritmo Genético es una búsqueda de haz estocástica que mantiene una población entera de P individuos en paralelo.", "concept": "Búsqueda Local vs Algoritmos Genéticos (Población Concurrente)", "mnemonic": "Hill Climbing = 1 explorador solitario. Algoritmo Genético = ejército de 100 exploradores comunicándose."}, {"id": 2, "unit": 1, "unit_name": "Fundamentos y Representación", "question": "En el problema de las N-reinas, ¿por qué se utiliza una representación mediante un array 1D de enteros en lugar de una matriz 2D de NxN?", "options": ["Porque la matriz 2D ocupa demasiada memoria para compilarse en C++.", "Porque al fijar una reina por columna en un array 1D, se eliminan automáticamente todos los conflictos de columna, reduciendo el espacio de búsqueda de C(N^2, N) a N^N.", "Porque los algoritmos genéticos no admiten matrices bidimensionales.", "Porque las diagonales no se pueden calcular sobre una matriz 2D."], "correct": 1, "explanation": "Si usáramos una matriz NxN con ceros y unos, habría combinaciones donde varias reinas caen en la misma columna. Al usar un vector donde la posición j indica la columna y el valor indica la fila, cada reina tiene su propia columna garantizada, reduciendo el espacio de búsqueda drásticamente.", "concept": "Codificación Inteligente del Cromosoma (Genotipo)", "mnemonic": "Array 1D = 1 reina por columna garantizada por construcción. Espacio reducido a N^N."}, {"id": 3, "unit": 1, "unit_name": "Fundamentos y Representación", "question": "¿Qué representa un gen y qué representa un alelo en el cromosoma de las N-reinas?", "options": ["El gen representa todo el tablero y el alelo representa el número de jaques.", "El gen representa una columna del tablero y el alelo representa la fila concreta donde se sitúa la reina en dicha columna.", "El gen representa la fila y el alelo representa el operador de cruce.", "El gen es el individuo de la población y el alelo es el número de generación."], "correct": 1, "explanation": "El cromosoma tiene N genes (posiciones 0 a N-1), cada uno asociado a una columna fija del tablero. El alelo es el valor entero que toma ese gen (de 0 a N-1), que indica en qué fila se coloca la reina de esa columna.", "concept": "Genotipo, Gen y Alelo", "mnemonic": "Gen = Columna (dónde miras). Alelo = Fila (qué altura tiene la reina)."}, {"id": 4, "unit": 1, "unit_name": "Fundamentos y Representación", "question": "¿Qué diferencia existe entre el Genotipo y el Fenotipo en un Algoritmo Genético?", "options": ["El genotipo es el valor del fitness y el fenotipo es el número de generaciones.", "El genotipo es la codificación interna en memoria (cadena/vector), mientras que el fenotipo es la manifestación externa o solución física en el dominio del problema (el tablero de ajedrez).", "El genotipo solo existe en C++ y el fenotipo solo en Python.", "Son exactamente el mismo concepto con dos nombres intercambiables."], "correct": 1, "explanation": "El genotipo es la representación genética abstracta que manipula el AG (el vector [2, 5, 7, 1, 3, 0, 6, 4]), mientras que el fenotipo es la solución en el mundo real (el tablero de ajedrez físico con las piezas colocadas).", "concept": "Correspondencia Genotipo - Fenotipo", "mnemonic": "Genotipo = Código genético interno (vector de números). Fenotipo = Físico real (tablero visible)."}, {"id": 5, "unit": 1, "unit_name": "Fundamentos y Representación", "question": "En nuestra práctica, ¿cómo está definida la función de idoneidad (fitness) y cuál es su valor óptimo?", "options": ["Cuenta el número de reinas colocadas; el óptimo es N reinas.", "Cuenta el número total de jaques mutuos entre parejas de reinas; el óptimo es 0 jaques (problema de minimización).", "Mide el tiempo en segundos que tarda el algoritmo; el óptimo es 0 segundos.", "Cuenta el número de diagonales libres; el óptimo es N^2."], "correct": 1, "explanation": "La función Objective(g) suma los ataques en filas y diagonales entre cada pareja de reinas (i, j) con i < j. Un individuo es mejor cuanto menor sea su valor. Una solución óptima tiene fitness = 0 jaques.", "concept": "Función de Idoneidad (Fitness Function)", "mnemonic": "Fitness = Número de Jaques. Queremos MINIMIZAR. 0 Jaques = ¡Victoria y 10!"}, {"id": 6, "unit": 1, "unit_name": "Fundamentos y Representación", "question": "¿Cómo se comprueba matemáticamente si dos reinas en las columnas i y j (con posiciones de fila r_i y r_j) están atacándose en diagonal?", "options": ["Si r_i == r_j.", "Si abs(j - i) == abs(r_j - r_i).", "Si (j + i) == (r_j + r_i).", "Si j * r_i == i * r_j."], "correct": 1, "explanation": "Dos casillas (i, r_i) y (j, r_j) están en la misma diagonal si y solo si la distancia horizontal entre sus columnas coincide con la distancia vertical entre sus filas, es decir: |j - i| == |r_j - r_i|.", "concept": "Detección Geométrica de Jaques Diagonales", "mnemonic": "Misma fila: r_i == r_j. Misma diagonal: distancia de columnas igual a distancia de filas."}, {"id": 7, "unit": 1, "unit_name": "Fundamentos y Representación", "question": "Para un tablero de N reinas, ¿cuántas parejas posibles de reinas deben compararse para calcular el fitness de un individuo?", "options": ["Exactamente N comparaciones.", "Exactamente N * (N - 1) / 2 comparaciones.", "Exactamente N^N comparaciones.", "Exactamente 2 * N comparaciones."], "correct": 1, "explanation": "Se deben comparar todos los pares (i, j) con 0 <= i < j < N. La suma es (N-1) + (N-2) + ... + 1 = N*(N-1)/2, lo que resulta en una complejidad cuadrática O(N^2) por individuo.", "concept": "Complejidad de la Función Fitness", "mnemonic": "Número de parejas no ordenadas de N elementos = N*(N-1)/2."}, {"id": 8, "unit": 1, "unit_name": "Fundamentos y Representación", "question": "¿Cómo se inicializa la población de individuos al arrancar el Algoritmo Genético?", "options": ["Todos los individuos se inicializan con ceros para empezar limpios.", "Se generan P individuos de forma aleatoria siguiendo una distribución uniforme sobre el conjunto de alelos de cada gen.", "Se busca una solución aproximada con Backtracking y se copia P veces.", "Solo se genera 1 individuo y los demás se van creando por mutación."], "correct": 1, "explanation": "La inicialización estándar (UniformInitializer en GAlib) asigna a cada gen de cada individuo un alelo elegido aleatoriamente y con probabilidad equiprobable dentro del rango [0, N-1], garantizando máxima dispersión inicial en el espacio de búsqueda.", "concept": "Inicialización de la Población", "mnemonic": "UniformInitializer = Azar puro uniforme para sembrar diversidad desde la generación 0."}, {"id": 9, "unit": 2, "unit_name": "Operadores Genéticos", "question": "¿Cuál es la función del operador de selección en un Algoritmo Genético?", "options": ["Seleccionar de una población de soluciones un conjunto de ellas al azar sin mirar su aptitud.", "Seleccionar de una población de soluciones un conjunto de ellas en función de cómo de buenas son con respecto al óptimo (fitness).", "Seleccionar qué parámetros debe cambiar el usuario en la línea de comandos.", "Seleccionar exclusivamente a los dos mejores individuos y descartar a todos los demás."], "correct": 1, "explanation": "El operador de selección escoge qué individuos tendrán la oportunidad de reproducirse y pasar su información a la siguiente generación, otorgando mayores probabilidades a los individuos con mejor fitness.", "concept": "Operador de Selección (Presión Selectiva)", "mnemonic": "Selección = filtro meritocrático: los mejores tienen más boletos para la lotería de ser padres."}, {"id": 10, "unit": 2, "unit_name": "Operadores Genéticos", "question": "¿Por qué el operador de selección por Torneo (TOUR) demostró ser muy superior al de Ruleta (ROUL) en el estudio previo de la práctica?", "options": ["Porque la ruleta solo funciona con números pares de reinas.", "Porque el torneo mantiene una presión selectiva constante e inmune a problemas de escalado de fitness, evitando la convergencia prematura o la pérdida de gradiente que sufre la ruleta.", "Porque el torneo es un operador de mutación y la ruleta no.", "Porque la librería GAlib no incluye el operador de ruleta."], "correct": 1, "explanation": "La ruleta depende del valor absoluto del fitness, sufriendo problemas de estancamiento cuando las diferencias entre individuos son pequeñas. El torneo solo compara el orden relativo entre 2 individuos al azar, manteniendo un avance constante hacia el óptimo.", "concept": "Torneo vs Ruleta", "mnemonic": "Ruleta = se marea con fitness parecidos. Torneo = combate directo 1 contra 1, simple y eficaz."}, {"id": 11, "unit": 2, "unit_name": "Operadores Genéticos", "question": "¿Qué necesita y qué hace el operador de cruce (recombinación)?", "options": ["Necesita un individuo y desordena sus genes aleatoriamente.", "Necesita dos individuos progenitores y combina partes de ellos para construir nuevos individuos válidos.", "Necesita tres individuos y calcula su promedio aritmético.", "Cambia un trozo de un individuo por alelos elegidos de un diccionario."], "correct": 1, "explanation": "El cruce toma dos progenitores y recombina partes de sus cromosomas a partir de un punto de corte, creando dos hijos que heredan características de ambos padres.", "concept": "Operador de Cruce (Recombinación)", "mnemonic": "Cruce necesita 2 padres -> produce 2 hijos con fragmentos combinados."}, {"id": 12, "unit": 2, "unit_name": "Operadores Genéticos", "question": "En la teoría de búsqueda heurística, ¿cuál es el papel fundamental del operador de cruce?", "options": ["Diversificación (exploración de nuevas regiones desconocidas).", "Intensificación (explotación de sub-bloques constructivos favorables ya descubiertos).", "Eliminar los individuos con fitness 0.", "Garantizar que no haya genes repetidos."], "correct": 1, "explanation": "El cruce es el motor de INTENSIFICACIÓN: explota las soluciones prometedoras combinando bloques constructivos que ya funcionaban bien en los padres.", "concept": "Intensificación vs Diversificación", "mnemonic": "CRUCE = INTENSIFICACIÓN (explotar lo bueno que ya tenemos)."}, {"id": 13, "unit": 2, "unit_name": "Operadores Genéticos", "question": "¿Cómo funciona el operador de mutación en un Algoritmo Genético?", "options": ["Cambia un individuo por otro completamente nuevo de la población.", "Cambia un trozo de un individuo por elementos elegidos arbitrariamente del alfabeto/alelos para generar un nuevo individuo válido.", "Intercambia cromosomas entre dos especies diferentes.", "Borra los genes que tengan un valor impar."], "correct": 1, "explanation": "La mutación altera aleatoriamente el alelo de uno o varios genes con una probabilidad pm, asignándole un nuevo valor de su conjunto de alelos válido sin necesidad de mirar a otros individuos.", "concept": "Operador de Mutación", "mnemonic": "Mutación = cambio estocástico de un gen por otro alelo válido."}, {"id": 14, "unit": 2, "unit_name": "Operadores Genéticos", "question": "En la teoría de búsqueda heurística, ¿cuál es el papel fundamental del operador de mutación?", "options": ["Intensificación de las mejores soluciones.", "Diversificación (exploración para escapar de óptimos locales y aportar variabilidad genética).", "Evaluar el tiempo de ejecución de la CPU.", "Acelerar el enlazado estático de las librerías."], "correct": 1, "explanation": "La mutación es el motor de DIVERSIFICACIÓN: introduce alelos frescos y nuevas trayectorias de búsqueda para que la población no quede atrapada en mínimos locales.", "concept": "Diversificación de la Búsqueda", "mnemonic": "MUTACIÓN = DIVERSIFICACIÓN (explorar nuevos caminos para no atascarse)."}, {"id": 15, "unit": 2, "unit_name": "Operadores Genéticos", "question": "Asocia cada operador genético con su frecuencia o probabilidad de aplicación típica:", "options": ["Selección: probabilidad baja; Cruce: siempre se aplica; Mutación: probabilidad alta.", "Selección: siempre se aplica; Cruce: probabilidad alta (cercana a 1); Mutación: probabilidad baja (cercana a 0).", "Selección: nunca; Cruce: 50%; Mutación: 50%.", "Selección: aleatoria; Cruce: 0.1; Mutación: 0.9."], "correct": 1, "explanation": "La selección se ejecuta siempre en cada ciclo para elegir reproductores. El cruce tiene una tasa alta (pc = 0.85). La mutación tiene una tasa muy baja (pm del orden de 0.01 a 0.05) para no destruir la solución.", "concept": "Frecuencias de Aplicación de Operadores", "mnemonic": "Selección: SIEMPRE. Cruce: ALTA (0.85). Mutación: BAJA (0.0125 - 0.05)."}, {"id": 16, "unit": 2, "unit_name": "Operadores Genéticos", "question": "¿En qué orden aplica un Algoritmo Genético estándar los tres operadores durante una generación?", "options": ["1º Cruce, 2º Selección, 3º Mutación.", "1º Mutación, 2º Selección, 3º Cruce.", "1º Selección, 2º Cruce, 3º Mutación.", "1º Selección, 2º Mutación, 3º Cruce."], "correct": 2, "explanation": "El ciclo reproductivo canónico sigue estrictamente el orden: 1) Selección (elegir qué padres se reproducen), 2) Cruce (recombinar sus genes para crear hijos), 3) Mutación (aplicar pequeñas perturbaciones sobre los hijos).", "concept": "Ciclo Reproductivo Canónico", "mnemonic": "Regla nemotécnica S-C-M: Primero Seleccionas a los padres, luego los Cruzas y finalmente Mutas a los hijos."}, {"id": 17, "unit": 2, "unit_name": "Operadores Genéticos", "question": "En un Algoritmo Genético, la propiedad de mantener siempre en la población al mejor individuo descubierto hasta la fecha se denomina:", "options": ["Genotipo.", "Fitness.", "Elitismo.", "Fenotipo."], "correct": 2, "explanation": "El elitismo garantiza que el mejor individuo histórico pase intacto a la siguiente generación si ninguno de los nuevos hijos supera su puntuación, asegurando que la calidad nunca empeore con el tiempo.", "concept": "Elitismo (Monotonía del Fitness)", "mnemonic": "Elitismo = la élite está protegida. El campeón nunca muere por un cruce defectuoso."}, {"id": 18, "unit": 2, "unit_name": "Operadores Genéticos", "question": "¿Qué diferencia hay entre el operador FlipMutator y el SwapMutator para cromosomas de tipo array?", "options": ["FlipMutator cambia el valor de un gen por otro alelo de su dominio; SwapMutator intercambia las posiciones de dos genes dentro del cromosoma.", "FlipMutator da la vuelta a todo el cromosoma y SwapMutator borra la mitad.", "FlipMutator solo funciona con binarios y SwapMutator solo con flotantes.", "Son sinónimos exactos en GAlib."], "correct": 0, "explanation": "FlipMutator toma un gen y le asigna un alelo al azar del conjunto de alelos (cambia de fila una reina). SwapMutator intercambia el valor de dos genes entre sí (intercambia las filas de dos reinas).", "concept": "Tipos de Mutación: Flip vs Swap", "mnemonic": "Flip = cambia un gen a un nuevo valor. Swap = intercambia dos genes existentes."}, {"id": 19, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "¿Cuál es la función del ajuste de parámetros en un Algoritmo Genético?", "options": ["Comprobar si el compilador de C++ tiene errores de sintaxis.", "Encontrar patrones que existan entre distintos valores de los parámetros para que el AG tenga un buen comportamiento global y óptimo en problemas futuros.", "Calcular cuántas páginas debe tener la memoria de la práctica.", "Reducir a cero el número de líneas del código fuente."], "correct": 1, "explanation": "El ajuste de parámetros busca relaciones empíricas y teóricas sistemáticas para determinar qué combinaciones de operadores y valores numéricos ofrecen la máxima probabilidad de éxito con el menor coste de cómputo.", "concept": "Objetivo del Ajuste de Parámetros", "mnemonic": "Ajuste = calibrar el motor para que gane carreras gastando la mínima gasolina."}, {"id": 20, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "Para llevar a cabo un proceso riguroso de ajuste de parámetros en un AG necesitamos obligatoriamente:", "options": ["Solamente un conjunto de casos o instancias del problema.", "Solamente un conjunto de parámetros y sus posibles valores.", "Un conjunto representativo de casos del problema y un conjunto de parámetros con sus valores candidatos a probar.", "Un ordenador con conexión permanente a internet."], "correct": 2, "explanation": "El ajuste requiere cruzar una batería diversa de problemas (ej. N de 8 a 70 reinas) con una rejilla de combinaciones de parámetros para medir estadísticamente su rendimiento.", "concept": "Requisitos del Ajuste de Parámetros", "mnemonic": "Ajuste = Casos de prueba + Parámetros a contrastar."}, {"id": 21, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "Con todos los resultados obtenidos tras ejecutar las combinaciones sobre los casos de prueba, ¿qué debemos hacer para extraer patrones de buen comportamiento global?", "options": ["Quedarnos con la primera combinación que compile sin avisos.", "Buscar las combinaciones que obtengan el mejor comportamiento con respecto a los criterios de optimalidad, tiempo y memoria, y realizar a partir de ellas una generalización que prediga el comportamiento futuro.", "Elegir siempre los valores más altos posibles de población y generaciones para no pillarnos los dedos.", "Hacer la media de todos los parámetros sin importar el tamaño del tablero."], "correct": 1, "explanation": "Se debe analizar el balance entre calidad de solución (optimalidad) y recursos consumidos (tiempo/espacio), extrayendo una regla generalizadora aplicable a cualquier instancia futura.", "concept": "Generalización en el Ajuste de Parámetros", "mnemonic": "Generalizar = buscar la regla de oro que sirva para cualquier caso futuro."}, {"id": 22, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "Al analizar la tabla oficial de 63 filas (8 a 70 reinas), ¿cómo se comportó la probabilidad de mutación pm = 0.05?", "options": ["Falló en todos los casos de la tabla sin obtener ningún óptimo.", "Alcanzó 0 jaques (óptimo) para N entre 8 y 22, pero a partir de N = 23 empezó a degradarse sistemáticamente con 1 a 3 jaques.", "Fue el mejor valor para tableros de más de 60 reinas.", "Obtuvo siempre exactamente 5 jaques en todos los casos."], "correct": 1, "explanation": "pm = 0.05 resolvió con 0 jaques todas las instancias pequeñas (N <= 22). Al llegar a N=23 y superiores, el cromosoma es más largo y pm=0.05 muta demasiados genes por individuo, degradando la solución.", "concept": "Comportamiento de pm = 0.05", "mnemonic": "pm = 0.05: Reina indiscutible en tableros pequeños (N <= 22), pero destructiva en grandes."}, {"id": 23, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "Al analizar la tabla de 63 filas, ¿cuál fue el comportamiento de pm = 0.025?", "options": ["Fue óptimo para N entre 9 y 40 (0 jaques unánimes), pero al superar N = 40 colapsó dejando de 2 a 7 jaques residuales.", "Fue el peor parámetro de toda la tabla, fallando siempre.", "Obtuvo 0 jaques en absolutamente las 63 filas de la tabla.", "Solo funcionó para N = 8."], "correct": 0, "explanation": "pm = 0.025 dominó el tramo de 9 a 40 reinas con un 100% de óptimos. Al pasar a N >= 41, el espacio creció y pm=0.025 resultó demasiado alto, generando hasta 7 jaques de error.", "concept": "Comportamiento de pm = 0.025", "mnemonic": "pm = 0.025: Campeón del tramo medio (9 <= N <= 40). Colapsa en N >= 41."}, {"id": 24, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "¿Qué probabilidades de mutación demostraron dominar con éxito el tramo de tableros grandes (N entre 41 y 70 reinas)?", "options": ["pm = 0.10 y pm = 0.20.", "pm = 0.01375 y pm = 0.0125.", "pm = 0.50 y pm = 0.85.", "pm = 0.00001 y pm = 0.00002."], "correct": 1, "explanation": "Para N >= 41, las tasas reducidas pm = 0.01375 y pm = 0.0125 lograron 0 jaques en prácticamente todas las instancias (con solo 1 o 2 excepciones estocásticas aisladas).", "concept": "Comportamiento de pm en Tableros Grandes (N >= 41)", "mnemonic": "Tableros grandes (41 a 70) necesitan mutación fina: 0.01375 y 0.0125."}, {"id": 25, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "¿Cuál es la famosa regla heurística de Goldberg y Bäck que explica matemáticamente el comportamiento de pm?", "options": ["pm ≈ N^2.", "pm ≈ 1 / L = 1 / N (inversamente proporcional a la longitud del cromosoma).", "pm ≈ N / 1000.", "pm ≈ log(N) / 2."], "correct": 1, "explanation": "La esperanza de genes mutados por individuo es E = N * pm. Para mantener un ritmo evolutivo sano, en promedio debe mutar aproximadamente 1 gen por individuo en cada generación (E ≈ 1), lo que implica directamente pm ≈ 1/N.", "concept": "Regla de Oro de Goldberg y Bäck (pm ≈ 1/N)", "mnemonic": "pm ≈ 1/N -> A tablero más grande, mutación por gen más pequeña."}, {"id": 26, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "¿Qué ocurre biológica y computacionalmente si fijamos una probabilidad de mutación muy alta (ej. pm = 0.05) en un tablero grande de N = 70?", "options": ["El algoritmo encuentra la solución en la generación 1.", "Se produce una hipermutación destructiva: mutan 3.5 genes por individuo en cada ciclo, destruyendo los bloques constructivos antes de que el cruce los consolide.", "El ordenador se apaga por sobrecalentamiento.", "El elitismo se desactiva automáticamente."], "correct": 1, "explanation": "Con 70 reinas y pm = 0.05, mutarían 70 * 0.05 = 3.5 reinas a la vez en casi todos los individuos. Eso destruye cualquier patrón bueno que el cruce hubiera encontrado, convirtiendo el AG en ruido caótico.", "concept": "Efecto de la Hipermutación Destructiva", "mnemonic": "Mutar demasiado = destrozar con la derecha lo que construyes con la izquierda."}, {"id": 27, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "En la tabla de 63 filas, ¿cómo se interpretan anomalías puntuales como que N = 28 diese 1 jaque con pm = 0.01375 o que N = 61 diese 1 jaque con pm = 0.0125?", "options": ["Son errores irrecuperables causados por fallos en el código C++.", "Son fluctuaciones estocásticas normales propias del carácter probabilístico de los AG, que no invalidan la tendencia global y se solucionan con el valor complementario.", "Demuestran que el problema de las 28 reinas no tiene solución matemática.", "Se deben a que la memoria RAM se quedó sin espacio."], "correct": 1, "explanation": "Los algoritmos genéticos son metaheurísticas estocásticas basadas en números pseudialeatorios. En ejecuciones individuales aisladas pueden ocurrir desviaciones menores por azar que se corrigen con una semilla diferente o el valor alternativo.", "concept": "Fluctuaciones Estocásticas en Metaheurísticas", "mnemonic": "Una anomalía aislada es ruido del azar; la tendencia de 63 casos es la ciencia."}, {"id": 28, "unit": 3, "unit_name": "Ajuste de Parámetros", "question": "En el estudio de parámetros, ¿por qué se seleccionó el tamaño de población P = 100 frente a P = 150?", "options": ["Porque P = 150 no compilaba en Windows.", "Porque P = 100 y P = 150 mostraron un comportamiento prácticamente idéntico en calidad de solución, pero P = 100 consume un 33% menos de memoria y tiempo de CPU.", "Porque P = 100 es el límite máximo permitido por la librería GAlib.", "Porque P = 150 generaba siempre individuos duplicados."], "correct": 1, "explanation": "Siguiendo los criterios de optimalidad y economía de recursos, si dos configuraciones logran el mismo fitness óptimo, siempre se prescribe la que requiera menor consumo de memoria y menor tiempo de CPU.", "concept": "Optimización de Recursos (Población P=100)", "mnemonic": "Misma calidad de solución con 100 que con 150 -> ¡Elige 100 y ahorra un 33% de recursos!"}, {"id": 29, "unit": 4, "unit_name": "Manual de Asignación", "question": "¿Cuál es la diferencia fundamental entre un Manual de Usuario y un Manual de Asignación?", "options": ["El de usuario lo escribe el programador y el de asignación lo escribe el profesor.", "El de usuario indica cómo ejecutar el programa (sintaxis y orden de parámetros); el de asignación aconseja al usuario qué valores concretos asignar según su problema para optimizar recursos.", "El de usuario es en papel y el de asignación es digital.", "No hay ninguna diferencia; son exactamente lo mismo."], "correct": 1, "explanation": "Pregunta clásica de examen: El Manual de Usuario describe la mecánica de ejecución. El Manual de Asignación es prescriptivo: orienta en la toma de decisiones para alcanzar el óptimo con el menor coste.", "concept": "Manual de Usuario vs Manual de Asignación", "mnemonic": "Usuario = CÓMO se ejecuta (sintaxis). Asignación = QUÉ valores poner (estrategia)."}, {"id": 30, "unit": 4, "unit_name": "Manual de Asignación", "question": "¿A quién va dirigido el Manual de Asignación y qué lenguaje debe emplear?", "options": ["Va dirigido exclusivamente a ingenieros de compiladores y debe incluir punteros y llamadas a la API de Windows.", "Va dirigido al usuario final del sistema y, por tanto, no debe incluir detalles técnicos internos de implementación ni código fuente.", "Va dirigido a los autores de la librería GAlib.", "Va dirigido al sistema operativo para configurar el registro."], "correct": 1, "explanation": "Tanto el Manual de Usuario como el de Asignación son para el usuario final. Deben ser claros, directos y prescriptivos, evitando detalles de bajo nivel como structs de C++ o punteros.", "concept": "Destinatario del Manual de Asignación", "mnemonic": "Para el usuario final: claro, conciso, útil y sin jerga interna de programación."}, {"id": 31, "unit": 4, "unit_name": "Manual de Asignación", "question": "En el Manual de Asignación construido, ¿qué valores se prescriben para los parámetros 2º a 7º?", "options": ["popsize=50, ngen=500, sel=ROUL, cross=TWOP, muta=SWAP, pcross=0.50.", "popsize=100, ngen=10000, sel=TOUR, cross=ONEP, muta=FLIP, pcross=0.85.", "popsize=1000, ngen=100000, sel=RAND, cross=UNIF, muta=NONE, pcross=1.00.", "Cada parámetro es elegido al azar por el sistema en cada ejecución."], "correct": 1, "explanation": "La tabla oficial del manual prescribe como valores óptimos universales: Población=100, Generaciones=10000, Selección=Torneo (TOUR), Cruce=Un punto (ONEP), Mutación=Flip (FLIP), y pc=0.85.", "concept": "Parámetros Estándar del Manual de Asignación", "mnemonic": "Receta maestra: (100, 10000, TOUR, ONEP, FLIP, 0.85, pm según tramo)."}, {"id": 32, "unit": 4, "unit_name": "Manual de Asignación", "question": "Según el Manual de Asignación, ¿qué valor de pmuta debe asignarse si un usuario quiere resolver N = 35 reinas?", "options": ["pm = 0.0500.", "pm = 0.0250.", "pm = 0.0125.", "pm = 0.8500."], "correct": 1, "explanation": "Para el intervalo 9 <= N <= 40 reinas, la regla del manual asigna pm = 0.0250, que demostró un 100% de éxito empírico en ese tramo.", "concept": "Asignación de Parámetros por Tramo (Tramo Medio)", "mnemonic": "35 está entre 9 y 40 -> le toca pm = 0.025."}, {"id": 33, "unit": 4, "unit_name": "Manual de Asignación", "question": "¿Qué valor de pmuta prescribe el Manual de Asignación para tableros grandes con N = 68 reinas?", "options": ["pm = 0.0500.", "pm = 0.0250.", "pm = 0.0125.", "pm = 0.0001."], "correct": 2, "explanation": "Para 61 <= N <= 75 reinas, la regla del manual prescribe pm = 0.0125, que en el caso N=68 resolvió el problema con 0 jaques.", "concept": "Asignación de Parámetros por Tramo (Tramo Grande)", "mnemonic": "N = 68 está en el tramo [61, 75] -> le corresponde pm = 0.0125."}, {"id": 34, "unit": 4, "unit_name": "Manual de Asignación", "question": "¿Por qué el caso N = 23 es un punto frontera clave en los casos de validación oficial?", "options": ["Porque es el primer número primo de dos cifras.", "Porque es exactamente la frontera donde pm = 0.05 empieza a fracasar (dejando 1 jaque) y pm = 0.025 toma el relevo con 0 jaques óptimos.", "Porque el tablero de 23 reinas no cabe en una pantalla estándar.", "Porque fue el único caso que necesitó más de 10000 generaciones."], "correct": 1, "explanation": "El caso N = 23 es el punto de inflexión del ajuste: con 0.05 la mutación se vuelve demasiado destructiva (1 jaque residual); al aplicar el manual con 0.025 se restaura el óptimo con 0 jaques.", "concept": "Casos Frontera de Validación (N=23)", "mnemonic": "N=23 es la frontera crítica donde cambiamos de 0.05 a 0.025."}, {"id": 35, "unit": 4, "unit_name": "Manual de Asignación", "question": "¿Por qué el profesor incluyó los casos N = 72 y N = 73 en la lista de validación?", "options": ["Porque quería comprobar si el ordenador se bloqueaba por falta de memoria.", "Porque son casos de extrapolación situados fuera del conjunto previo de la tabla (N > 70), probando si el manual es capaz de generalizar con éxito ante problemas no vistos.", "Porque 72 y 73 son las edades de los creadores de GAlib.", "Porque con esos tamaños el cruce en un punto no funciona."], "correct": 1, "explanation": "En ciencia de datos e IA, validar en extrapolación certifica que el modelo no ha memorizado los datos (overfitting), sino que ha aprendido una ley general capaz de resolver instancias mayores.", "concept": "Validación en Extrapolación (N=72, N=73)", "mnemonic": "N=72 y 73 demuestran que el manual funciona incluso en territorio desconocido."}, {"id": 36, "unit": 4, "unit_name": "Manual de Asignación", "question": "¿Qué fitness se obtuvo al ejecutar los 10 casos de validación oficiales con el ejecutable n-reinas.exe siguiendo el Manual de Asignación?", "options": ["Se obtuvo una media de 3 jaques por caso.", "Se obtuvo fitness = 0 jaques (100% de óptimos) en absolutamente todos los 10 casos.", "Fallaron los casos impares y acertaron los pares.", "Solo se resolvieron los casos pequeños (7 y 8 reinas)."], "correct": 1, "explanation": "El sistema alcanzó la solución óptima absoluta (0 jaques) en el 100% de los 10 casos de validación (7, 8, 23, 28, 40, 41, 61, 68, 72 y 73), certificando la excelencia del ajuste.", "concept": "Eficacia Empírica de Validación", "mnemonic": "¡Pleno total! 10 de 10 casos con 0 jaques."}, {"id": 37, "unit": 5, "unit_name": "4 Criterios de IA", "question": "¿Cumple el Algoritmo Genético el criterio de Completitud desde el punto de vista teórico asintótico?", "options": ["No, los algoritmos con azar nunca son completos bajo ninguna definición.", "Sí, teóricamente es asintóticamente completo: con mutación no nula (pm > 0) y elitismo, la cadena de Markov es ergódica y la probabilidad de alcanzar el óptimo tiende a 1 cuando el tiempo tiende a infinito.", "Solo si el número de reinas es menor que 10.", "Solo si no se utiliza el operador de cruce."], "correct": 1, "explanation": "En el límite asintótico (generaciones t -> infinito), la mutación garantiza que cualquier estado del espacio tiene probabilidad no nula de visitarse. Combinado con el elitismo que nunca pierde la mejor solución, la completitud teórica es del 100%.", "concept": "Completitud Teórica Asintótica", "mnemonic": "Teóricamente con tiempo infinito: lim P(éxito) = 1 (Completo)."}, {"id": 38, "unit": 5, "unit_name": "4 Criterios de IA", "question": "¿Cumple el Algoritmo Genético el criterio de Completitud en la práctica con una cota finita de generaciones (G = 10000)?", "options": ["Sí, es deterministamente completo porque 10000 es un número muy grande.", "Formalmente es incompleto en sentido estricto, porque no existe garantía matemática de alcanzar la solución antes de agotar las 10000 generaciones (aunque empíricamente con nuestro manual fue del 100%).", "No funciona nunca en la práctica.", "Depende de la versión del sistema operativo Windows."], "correct": 1, "explanation": "Al acotar el tiempo a un horizonte finito (G=10000), una metaheurística estocástica es técnicamente incompleta, ya que el azar podría agotar el presupuesto de iteraciones sin dar con el óptimo. En la práctica, con buen ajuste, la tasa de éxito roza el 100%.", "concept": "Completitud Práctica (Horizonte Acotado)", "mnemonic": "En la práctica formal: incompleto por tener límite de tiempo, pero empíricamente 100% eficaz."}, {"id": 39, "unit": 5, "unit_name": "4 Criterios de IA", "question": "¿Cómo se garantiza la Optimalidad en el sistema construido en la práctica?", "options": ["Porque el algoritmo siempre recorre todos los estados posibles.", "Porque la función de terminación personalizada detiene el programa en cuanto minEver() == 0, garantizando que toda solución terminada por esa vía es forzosamente el óptimo global (0 jaques).", "Porque el cruce ONEP solo genera soluciones óptimas.", "No se puede garantizar en ningún caso."], "correct": 1, "explanation": "Aunque el AG no es admisible por definición estricta, la función Termina comprueba explícitamente ga.statistics().minEver() == 0. Por ende, toda ejecución exitosa entrega una solución matemáticamente óptima.", "concept": "Garantía de Optimalidad por Criterio de Parada", "mnemonic": "Termina al alcanzar minEver() == 0 -> Solución entregada = 100% Óptima."}, {"id": 40, "unit": 5, "unit_name": "4 Criterios de IA", "question": "¿Cuál es la complejidad temporal de evaluar la función fitness (Objective) para un solo individuo de N reinas?", "options": ["O(1) (constante).", "O(N) (lineal).", "O(N^2) (cuadrática), ya que compara todas las parejas de reinas i y j con i < j.", "O(N!) (factorial)."], "correct": 2, "explanation": "El doble bucle for anidado recorre i de 0 a N-1 y j de i+1 a N-1. Se realizan exactamente N(N-1)/2 comparaciones, lo que equivale asintóticamente a O(N^2).", "concept": "Complejidad Temporal del Fitness", "mnemonic": "Doble bucle for i, j con i < j -> O(N^2) por individuo."}, {"id": 41, "unit": 5, "unit_name": "4 Criterios de IA", "question": "¿Cuál es la complejidad temporal global del Algoritmo Genético en el peor caso?", "options": ["O(N!).", "T(N) = O(G * P * N^2), donde G es el número de generaciones, P el tamaño de población y N el número de reinas.", "O(2^N).", "O(N * log N)."], "correct": 1, "explanation": "En cada una de las G generaciones se evalúan P individuos con coste O(N^2), mientras que la selección, cruce y mutación tienen costes menores O(P) y O(P*N). Por tanto, domina O(G * P * N^2).", "concept": "Deducción de la Complejidad Temporal del AG", "mnemonic": "Tiempo = Generaciones (G) * Población (P) * CosteFitness (N^2) = O(G * P * N^2)."}, {"id": 42, "unit": 5, "unit_name": "4 Criterios de IA", "question": "Al fijar la población P = 100 y las generaciones G <= 10000 como constantes, ¿cómo escala la complejidad temporal respecto al tamaño del problema N?", "options": ["Escala de forma exponencial O(2^N).", "Escala de forma factorial O(N!).", "Escala de forma polinomial cuadrática O(N^2).", "Permanece constante O(1)."], "correct": 2, "explanation": "Al ser P y G constantes acotadas, T(N) = O(N^2). Esta naturaleza polinomial cuadrática es inmensamente más rápida que la búsqueda por Backtracking (O(N!)), permitiendo resolver tableros gigantes en segundos.", "concept": "Escalabilidad Polinomial Cuadrática", "mnemonic": "AG para N-reinas = O(N^2). ¡Polinomial vence a Factorial O(N!) por goleada!"}, {"id": 43, "unit": 5, "unit_name": "4 Criterios de IA", "question": "¿Cuál es la complejidad espacial (consumo en memoria RAM) del Algoritmo Genético?", "options": ["Exponencial O(b^d), colapsando la memoria en tableros grandes.", "Estrictamente lineal O(P * N) = O(N), ya que solo almacena en memoria la población actual y la de descendientes.", "Cuadrática O(N^2).", "Infinita."], "correct": 1, "explanation": "El AG solo almacena 2 poblaciones de P individuos con N enteros cada una, más pequeñas estructuras auxiliares. S(N) = O(P * N). Con P constante, la memoria crece de forma estrictamente lineal con N.", "concept": "Complejidad Espacial (Memoria Lineal)", "mnemonic": "Espacio = O(P * N) = O(N). Lineal y pequeñísimo (< 60 KB para N=73)."}, {"id": 44, "unit": 5, "unit_name": "4 Criterios de IA", "question": "¿Por qué el Algoritmo Genético supera en gestión de memoria a los métodos de búsqueda en grafos y árboles como Búsqueda en Anchura (BFS) o A*?", "options": ["Porque GAlib usa compresión de archivos ZIP en tiempo real.", "Porque BFS y A* almacenan el árbol completo de estados abiertos que crece de forma exponencial O(b^d) provocando Out-Of-Memory, mientras que el AG tiene una huella fija y lineal O(P * N).", "Porque el ajedrez no se puede modelar como un grafo.", "Porque los algoritmos en grafos no funcionan en C++."], "correct": 1, "explanation": "Los algoritmos sistemáticos en árboles/grafos acumulan millones de nodos en memoria buscando el camino. El AG es una técnica de búsqueda local: solo conserva la población viva actual en memoria.", "concept": "Ventaja de Memoria: AG vs Búsqueda en Grafos", "mnemonic": "Árboles (A*/BFS) = explosión de memoria exponencial. AG = memoria fija lineal constante."}, {"id": 45, "unit": 6, "unit_name": "GAlib en C++", "question": "En la librería GAlib, ¿cuál es la clase base utilizada para representar las soluciones o genomas?", "options": ["GAGeneticAlgorithm.", "GAGenome.", "GASelectionScheme.", "GAPopulation."], "correct": 1, "explanation": "GAGenome es la clase base abstracta de GAlib que define un genoma. De ella derivan clases concretas como GA1DArrayGenome, GABinaryStringGenome o GATreeGenome.", "concept": "Jerarquía de Clases de GAlib (GAGenome)", "mnemonic": "GAGenome = Clase base para soluciones. GAGeneticAlgorithm = Clase base para el motor."}, {"id": 46, "unit": 6, "unit_name": "GAlib en C++", "question": "¿Qué clase concreta derivada de GAGenome se utiliza en nuestra práctica para representar el tablero de N reinas?", "options": ["GABinaryStringGenome.", "GA1DArrayAlleleGenome<int>.", "GA2DArrayGenome<float>.", "GATreeGenome."], "correct": 1, "explanation": "Se emplea GA1DArrayAlleleGenome<int>, que implementa un vector unidimensional de enteros donde cada posición tiene asociado un conjunto enumerado de alelos admisibles.", "concept": "Clase GA1DArrayAlleleGenome<int>", "mnemonic": "Array 1D + Allele + Genome + <int> = la combinación exacta de las reinas."}, {"id": 47, "unit": 6, "unit_name": "GAlib en C++", "question": "¿Para qué sirve el objeto GAAlleleSet<int> alelos en nuestro código C++?", "options": ["Para contar el número de generaciones transcurridas.", "Para definir el conjunto de posibles valores que puede tomar cada gen (las filas de 0 a N-1).", "Para calcular el tiempo en milisegundos de la CPU.", "Para guardar el nombre de los estudiantes del grupo."], "correct": 1, "explanation": "GAAlleleSet<int> define el dominio o abanico de valores válidos para cada gen. Con el bucle for(int i=0; i<nreinas; i++) alelos.add(i); se añaden las N filas posibles.", "concept": "Clase GAAlleleSet (Dominio de Alelos)", "mnemonic": "AlleleSet = bolsa de valores permitidos (filas 0 a N-1)."}, {"id": 48, "unit": 6, "unit_name": "GAlib en C++", "question": "¿Qué clase de GAlib se utiliza para crear y ejecutar el motor del Algoritmo Genético?", "options": ["GAQuickSort.", "GASimpleGA (derivada de GAGeneticAlgorithm).", "GAWindowManager.", "GANeuralNetwork."], "correct": 1, "explanation": "GASimpleGA es la implementación clásica de algoritmo genético generacional provista por GAlib, que clona el genoma base y produce nuevas generaciones aplicando selección, cruce y mutación.", "concept": "Clase GASimpleGA", "mnemonic": "GASimpleGA = el motor evolutivo clásico de GAlib."}, {"id": 49, "unit": 6, "unit_name": "GAlib en C++", "question": "En el código C++, ¿qué hace exactamente la instrucción ga.minimaxi(-1);?", "options": ["Aumenta la memoria RAM en 1 Megabyte.", "Indica al algoritmo que debe MINIMIZAR la función objetivo (ya que buscamos reducir los jaques a 0).", "Indica que el algoritmo debe detenerse tras 1 segundo.", "Invierte el orden de los argumentos de la consola."], "correct": 1, "explanation": "En GAlib, por defecto los algoritmos maximizan el fitness (+1). Al invocar ga.minimaxi(-1) se configura explícitamente para MINIMIZAR la función objetivo (menos jaques = mejor individuo).", "concept": "Configuración de Minimización en GAlib", "mnemonic": "minimaxi(+1) = Maximizar. minimaxi(-1) = MINIMIZAR jaques a 0."}, {"id": 50, "unit": 6, "unit_name": "GAlib en C++", "question": "Si en un programa con GAlib no especificamos una función de terminación personalizada (terminator), ¿cuándo parará el algoritmo por defecto?", "options": ["Parará en cuanto encuentre el primer individuo con fitness 0.", "Parará cuando se alcance el número de generaciones indicado en nGenerations (TerminateUponGeneration por defecto).", "Parará cuando todos los individuos sean idénticos.", "No parará nunca."], "correct": 1, "explanation": "Pregunta de examen de control: El operador por defecto es TerminateUponGeneration, que obliga al AG a agotar todas las generaciones prefijadas. Por eso implementamos la función Termina para detenerlo antes si llega a 0 jaques.", "concept": "Criterio de Parada por Defecto en GAlib", "mnemonic": "Por defecto en GAlib: para por generaciones, ¡NO por encontrar el óptimo!"}, {"id": 51, "unit": 6, "unit_name": "GAlib en C++", "question": "En la función Termina de nuestro código: if ( (ga.statistics().minEver()==0) || (ga.statistics().generation()==ga.nGenerations()) ) return gaTrue; ¿qué significa ga.statistics().minEver()?", "options": ["El número de minutos transcurridos.", "El mejor valor de fitness (mínimo número de jaques) alcanzado por cualquier individuo a lo largo de toda la historia evolutiva.", "El número mínimo de reinas permitidas por el programa.", "El tiempo mínimo de CPU por generación."], "correct": 1, "explanation": "minEver() devuelve el valor mínimo absoluto registrado por el objeto de estadísticas desde el inicio de la ejecución. Si es 0, significa que ya hemos encontrado una solución perfecta sin jaques.", "concept": "Estadísticas de GAlib (minEver)", "mnemonic": "minEver() = el mínimo histórico absoluto jamás encontrado."}, {"id": 52, "unit": 6, "unit_name": "GAlib en C++", "question": "¿Cuál es el orden estricto de los 8 argumentos que espera la función main de n-reinas.exe por línea de comandos?", "options": ["popsize, ngen, pcross, pmuta, nreinas, sel, cross, muta.", "nreinas, popsize, ngen, sel, cross, muta, pcross, pmuta.", "nreinas, sel, cross, muta, popsize, ngen, pcross, pmuta.", "sel, cross, muta, pcross, pmuta, nreinas, popsize, ngen."], "correct": 1, "explanation": "El código lee secuencialmente: argv[1]=nreinas, argv[2]=popsize, argv[3]=ngen, argv[4]=sel, argv[5]=cross, argv[6]=muta, argv[7]=pcross, argv[8]=pmuta.", "concept": "Sintaxis de Invocación por Línea de Comandos", "mnemonic": "1º Reinas -> 2º Población -> 3º Generaciones -> 4º Selección -> 5º Cruce -> 6º Mutación -> 7º p_c -> 8º p_m."}];
+
+    /* ============================================================
+       WEB AUDIO API SYNTHESIZER (100% OFFLINE, ZERO EXTERNAL ASSETS)
+       ============================================================ */
+    class AudioSynthesizer {
+      constructor() {
+        this.ctx = null;
+        this.soundEnabled = true;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            this.ctx = new AudioContext();
+          }
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playSuccess() {
+        if (!this.soundEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        // Duolingo style uplifting major arpeggio (C5 -> E5 -> G5 -> C6)
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, index) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime + index * 0.08);
+          
+          gain.gain.setValueAtTime(0.18, this.ctx.currentTime + index * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + index * 0.08 + 0.25);
+          
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          
+          osc.start(this.ctx.currentTime + index * 0.08);
+          osc.stop(this.ctx.currentTime + index * 0.08 + 0.3);
+        });
+      }
+
+      playError() {
+        if (!this.soundEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        // Duolingo style "womp" low dissonance buzz
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.35);
+
+        gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.35);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(this.ctx.currentTime);
+        osc.stop(this.ctx.currentTime + 0.36);
+      }
+
+      playSelect() {
+        if (!this.soundEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.06);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(this.ctx.currentTime);
+        osc.stop(this.ctx.currentTime + 0.07);
+      }
+
+      playFanfare() {
+        if (!this.soundEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const chords = [
+          [523.25, 659.25, 783.99],
+          [587.33, 739.99, 880.00],
+          [659.25, 830.61, 987.77],
+          [783.99, 987.77, 1174.66, 1567.98]
+        ];
+
+        chords.forEach((chord, step) => {
+          const time = this.ctx.currentTime + step * 0.16;
+          chord.forEach(freq => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, time);
+            gain.gain.setValueAtTime(0.12, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.45);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(time);
+            osc.stop(time + 0.5);
+          });
+        });
+      }
+    }
+
+    const sound = new AudioSynthesizer();
+
+    /* ============================================================
+       USER STATE & PERSISTENCE (LOCAL STORAGE)
+       ============================================================ */
+    const STORAGE_KEY = 'duo_ssii_p1_state_v2';
+
+    const defaultState = {
+      streak: 1,
+      xp: 0,
+      hearts: 5,
+      soundEnabled: true,
+      masteredQuestionIds: [],
+      failedQuestionIds: [],
+      graduatedQuestionIds: [],
+      unitProgress: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
+      simulatorsPassed: 0,
+      totalAttempts: 0,
+      totalCorrect: 0
+    };
+
+    let userState = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return Object.assign({}, defaultState, JSON.parse(raw));
+      } catch (e) {
+        console.warn('Error loading localStorage:', e);
+      }
+      return Object.assign({}, defaultState);
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+      } catch (e) {
+        console.warn('Error saving state:', e);
+      }
+      updateHeaderUI();
+      updateDashboardUI();
+      updateVaultUI();
+    }
+
+    /* ============================================================
+       NAVIGATION & TABS
+       ============================================================ */
+    function switchTab(tabId) {
+      document.querySelectorAll('.view-section').forEach(sec => sec.style.display = 'none');
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      const targetView = document.getElementById(`view-${tabId}`);
+      const targetBtn = document.getElementById(`tabBtn-${tabId}`);
+
+      if (targetView) targetView.style.display = 'block';
+      if (targetBtn) targetBtn.classList.add('active');
+
+      if (tabId === 'dashboard') updateDashboardUI();
+      if (tabId === 'vault') updateVaultUI();
+    }
+
+    function toggleSound() {
+      userState.soundEnabled = !userState.soundEnabled;
+      sound.soundEnabled = userState.soundEnabled;
+      document.getElementById('soundToggleBtn').textContent = userState.soundEnabled ? '🔊' : '🔇';
+      saveState();
+    }
+
+    function showHeartsInfo() {
+      alert(`Tienes ${userState.hearts} de 5 vidas.\n\n• Cada fallo en una pregunta te resta 1 corazón.\n• Cada acierto en el Baúl de Repaso te devuelve 1 corazón (+1 ❤️).\n• Puedes recargar gratis en cualquier momento si te quedas a 0.`);
+    }
+
+    function updateHeaderUI() {
+      document.getElementById('streakCount').textContent = userState.streak;
+      document.getElementById('xpCount').textContent = userState.xp;
+      document.getElementById('heartsCount').textContent = userState.hearts;
+      document.getElementById('soundToggleBtn').textContent = userState.soundEnabled ? '🔊' : '🔇';
+      sound.soundEnabled = userState.soundEnabled;
+
+      // Update unit progress badges
+      for (let u = 1; u <= 6; u++) {
+        const unitQuestions = ALL_QUESTIONS.filter(q => q.unit === u);
+        const masteredInUnit = unitQuestions.filter(q => userState.masteredQuestionIds.includes(q.id)).length;
+        const tag = document.getElementById(`unitProgress-${u}`);
+        if (tag) {
+          tag.textContent = `${masteredInUnit}/${unitQuestions.length}`;
+        }
+      }
+    }
+
+    /* ============================================================
+       QUIZ SESSION ENGINE
+       ============================================================ */
+    let currentSession = {
+      active: false,
+      mode: 'unit', // 'unit', 'vault', 'simulator'
+      unitId: null,
+      queue: [],
+      initialTotal: 0,
+      currentIndex: 0,
+      selectedOptionIndex: null,
+      isAnswerChecked: false,
+      isCorrect: false,
+      sessionCorrectCount: 0,
+      sessionMistakeCount: 0
+    };
+
+    function startUnit(unitId) {
+      const questions = ALL_QUESTIONS.filter(q => q.unit === unitId);
+      launchQuizSession(questions, `UNIDAD ${unitId}`, 'unit', unitId);
+    }
+
+    function startVaultReview() {
+      if (userState.failedQuestionIds.length === 0) {
+        alert('¡Excelente trabajo! No tienes ninguna pregunta pendiente en tu Baúl de Repaso. Puedes hacer simulacros o repasar unidades.');
+        return;
+      }
+      const questions = ALL_QUESTIONS.filter(q => userState.failedQuestionIds.includes(q.id));
+      launchQuizSession(questions, 'BAÚL DE REPASO', 'vault', null);
+    }
+
+    function startExamSimulator() {
+      // Pick 20 questions shuffled across all units
+      const shuffled = [...ALL_QUESTIONS].sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 20);
+      launchQuizSession(selected, 'SIMULACRO EXAMEN 10/10', 'simulator', null);
+    }
+
+    function launchQuizSession(questionList, title, mode, unitId) {
+      if (userState.hearts <= 0) {
+        document.getElementById('outOfLivesModal').style.display = 'flex';
+        return;
+      }
+
+      // Clone and shuffle options per question
+      const prepared = questionList.map(q => {
+        return {
+          ...q,
+          optionsWithMeta: q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }))
+            .sort(() => 0.5 - Math.random())
+        };
+      });
+
+      currentSession = {
+        active: true,
+        mode: mode,
+        unitId: unitId,
+        queue: prepared,
+        initialTotal: prepared.length,
+        currentIndex: 0,
+        selectedOptionIndex: null,
+        isAnswerChecked: false,
+        isCorrect: false,
+        sessionCorrectCount: 0,
+        sessionMistakeCount: 0
+      };
+
+      document.getElementById('quizOverlay').style.display = 'flex';
+      renderCurrentQuizQuestion();
+    }
+
+    function renderCurrentQuizQuestion() {
+      if (currentSession.currentIndex >= currentSession.queue.length) {
+        finishQuizSession();
+        return;
+      }
+
+      const currentQ = currentSession.queue[currentSession.currentIndex];
+      currentSession.selectedOptionIndex = null;
+      currentSession.isAnswerChecked = false;
+      currentSession.isCorrect = false;
+
+      // Update Top Bar
+      const progressPercent = Math.min(100, Math.round((currentSession.currentIndex / currentSession.initialTotal) * 100));
+      document.getElementById('quizProgressBar').style.width = `${progressPercent}%`;
+      document.getElementById('quizHeartsNum').textContent = userState.hearts;
+      document.getElementById('quizUnitPill').textContent = currentQ.unit_name ? currentQ.unit_name.toUpperCase() : 'EJERCICIO';
+      document.getElementById('quizQuestionText').textContent = currentQ.question;
+
+      // Render Options
+      const listContainer = document.getElementById('quizOptionsList');
+      listContainer.innerHTML = '';
+
+      const letters = ['A', 'B', 'C', 'D'];
+      currentQ.optionsWithMeta.forEach((opt, idx) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-option-card';
+        card.id = `optCard-${idx}`;
+        card.onclick = () => selectOption(idx);
+
+        card.innerHTML = `
+          <div class="option-key-badge">${letters[idx]}</div>
+          <div class="option-label-text">${opt.text}</div>
+        `;
+        listContainer.appendChild(card);
+      });
+
+      // Reset Footer
+      resetFooterToCheckState();
+    }
+
+    function selectOption(index) {
+      if (currentSession.isAnswerChecked) return;
+      sound.playSelect();
+      currentSession.selectedOptionIndex = index;
+
+      document.querySelectorAll('.quiz-option-card').forEach((card, idx) => {
+        if (idx === index) {
+          card.classList.add('selected');
+        } else {
+          card.classList.remove('selected');
+        }
+      });
+
+      // Enable Check button
+      const btn = document.getElementById('btnCheckAnswer');
+      btn.className = 'btn-3d btn-green';
+      btn.disabled = false;
+    }
+
+    function resetFooterToCheckState() {
+      const footer = document.getElementById('quizFooter');
+      footer.style.backgroundColor = '#ffffff';
+      footer.style.borderTopColor = 'var(--duo-border)';
+
+      const feedback = document.getElementById('footerFeedbackText');
+      feedback.style.display = 'none';
+
+      const btn = document.getElementById('btnCheckAnswer');
+      btn.className = 'btn-3d btn-gray';
+      btn.textContent = 'COMPROBAR';
+      btn.disabled = true;
+    }
+
+    /* ============================================================
+       ANSWER VERIFICATION & DETAILED EXPLANATION POP-UP (CORE REQUIREMENT)
+       ============================================================ */
+    function handleFooterAction() {
+      if (!currentSession.isAnswerChecked) {
+        checkSelectedAnswer();
+      } else {
+        // Advance to next question
+        currentSession.currentIndex++;
+        renderCurrentQuizQuestion();
+      }
+    }
+
+    function checkSelectedAnswer() {
+      if (currentSession.selectedOptionIndex === null) return;
+
+      currentSession.isAnswerChecked = true;
+      userState.totalAttempts++;
+
+      const currentQ = currentSession.queue[currentSession.currentIndex];
+      const selectedMeta = currentQ.optionsWithMeta[currentSession.selectedOptionIndex];
+      const isCorrect = selectedMeta.isCorrect;
+      currentSession.isCorrect = isCorrect;
+
+      const selectedCard = document.getElementById(`optCard-${currentSession.selectedOptionIndex}`);
+
+      if (isCorrect) {
+        // ================= SUCCESS CASE =================
+        sound.playSuccess();
+        selectedCard.classList.add('correct-highlight');
+
+        userState.totalCorrect++;
+        userState.xp += 10;
+        currentSession.sessionCorrectCount++;
+
+        // Mark question as mastered if not already
+        if (!userState.masteredQuestionIds.includes(currentQ.id)) {
+          userState.masteredQuestionIds.push(currentQ.id);
+        }
+
+        // If answered correctly in Vault, graduate it and grant heart
+        if (currentSession.mode === 'vault') {
+          userState.failedQuestionIds = userState.failedQuestionIds.filter(id => id !== currentQ.id);
+          if (!userState.graduatedQuestionIds.includes(currentQ.id)) {
+            userState.graduatedQuestionIds.push(currentQ.id);
+          }
+          if (userState.hearts < 5) {
+            userState.hearts++;
+          }
+        }
+
+        // Style bottom footer green
+        const footer = document.getElementById('quizFooter');
+        footer.style.backgroundColor = 'var(--duo-green-light)';
+        footer.style.borderTopColor = 'var(--duo-green-border)';
+
+        const feedback = document.getElementById('footerFeedbackText');
+        feedback.style.display = 'block';
+        feedback.style.color = '#276702';
+        feedback.innerHTML = '✨ ¡EXCELENTE! Respuesta correcta (+10 XP)';
+
+        const btn = document.getElementById('btnCheckAnswer');
+        btn.className = 'btn-3d btn-green';
+        btn.textContent = 'CONTINUAR';
+
+        saveState();
+
+      } else {
+        // ================= FAILURE CASE (POP-UP DETALLADO) =================
+        sound.playError();
+        selectedCard.classList.add('wrong-highlight');
+        selectedCard.classList.add('shake-card');
+
+        // Find correct card to illuminate
+        const correctIndex = currentQ.optionsWithMeta.findIndex(opt => opt.isCorrect);
+        if (correctIndex !== -1) {
+          document.getElementById(`optCard-${correctIndex}`).classList.add('correct-highlight');
+        }
+
+        // Deduct heart
+        userState.hearts = Math.max(0, userState.hearts - 1);
+        document.getElementById('quizHeartsNum').textContent = userState.hearts;
+        currentSession.sessionMistakeCount++;
+
+        // Add to Failed Queue in localStorage if not already there
+        if (!userState.failedQuestionIds.includes(currentQ.id)) {
+          userState.failedQuestionIds.push(currentQ.id);
+        }
+        // Remove from mastered if it was previously there
+        userState.masteredQuestionIds = userState.masteredQuestionIds.filter(id => id !== currentQ.id);
+
+        // SPATIAL REPETITION: Re-insert question 3 positions ahead in active session queue!
+        const reinsertPosition = currentSession.currentIndex + 3;
+        currentSession.queue.splice(reinsertPosition, 0, currentQ);
+
+        saveState();
+
+        // OPEN THE COMPREHENSIVE DUOLINGO EXPLANATION MODAL (Requested by user)
+        openExplanationModal(currentQ, selectedMeta.text, currentQ.optionsWithMeta[correctIndex].text);
+
+        // Style bottom footer red
+        const footer = document.getElementById('quizFooter');
+        footer.style.backgroundColor = 'var(--duo-red-light)';
+        footer.style.borderTopColor = '#fad2d2';
+
+        const feedback = document.getElementById('footerFeedbackText');
+        feedback.style.display = 'block';
+        feedback.style.color = '#9c1515';
+        feedback.innerHTML = '❌ ¡Incorrecto! Pulsa para ver la explicación y repetirla';
+
+        const btn = document.getElementById('btnCheckAnswer');
+        btn.className = 'btn-3d btn-red';
+        btn.textContent = 'CONTINUAR';
+      }
+    }
+
+    function openExplanationModal(questionObj, userWrongText, correctText) {
+      document.getElementById('modalUserAnswer').textContent = userWrongText;
+      document.getElementById('modalCorrectAnswer').textContent = correctText;
+      document.getElementById('modalExplanation').textContent = questionObj.explanation;
+      document.getElementById('modalConcept').textContent = questionObj.concept;
+      document.getElementById('modalMnemonic').textContent = questionObj.mnemonic;
+
+      document.getElementById('explanationModal').style.display = 'flex';
+    }
+
+    function closeExplanationModal() {
+      document.getElementById('explanationModal').style.display = 'none';
+
+      // Check if user ran out of lives
+      if (userState.hearts <= 0) {
+        document.getElementById('outOfLivesModal').style.display = 'flex';
+      }
+    }
+
+    function exitQuiz() {
+      if (confirm('¿Seguro que deseas salir de la sesión? El progreso no completado se conservará en tu baúl.')) {
+        document.getElementById('quizOverlay').style.display = 'none';
+        currentSession.active = false;
+        saveState();
+      }
+    }
+
+    function exitAndGoToVault() {
+      document.getElementById('outOfLivesModal').style.display = 'none';
+      document.getElementById('quizOverlay').style.display = 'none';
+      currentSession.active = false;
+      // Refill 1 heart to allow starting review
+      userState.hearts = 1;
+      saveState();
+      switchTab('vault');
+    }
+
+    function refillHeartsFree() {
+      userState.hearts = 5;
+      saveState();
+      document.getElementById('outOfLivesModal').style.display = 'none';
+      document.getElementById('quizHeartsNum').textContent = 5;
+    }
+
+    function finishQuizSession() {
+      sound.playFanfare();
+      triggerConfetti();
+
+      let bonusXP = 50;
+      userState.xp += bonusXP;
+
+      if (currentSession.mode === 'simulator' && currentSession.sessionCorrectCount >= 18) {
+        userState.simulatorsPassed++;
+      }
+
+      saveState();
+
+      alert(`🎉 ¡SESIÓN COMPLETADA CON ÉXITO!\n\n• Aciertos: ${currentSession.sessionCorrectCount}\n• Fallos repasados: ${currentSession.sessionMistakeCount}\n• Recompensa: +${bonusXP} XP\n\n¡Sigue así para asegurar el 10!`);
+
+      document.getElementById('quizOverlay').style.display = 'none';
+      currentSession.active = false;
+      switchTab('path');
+    }
+
+    /* ============================================================
+       DASHBOARD & GARANTÍA DE DIEZ (ANALYTICS)
+       ============================================================ */
+    function updateDashboardUI() {
+      const totalQuestions = ALL_QUESTIONS.length; // 52
+      const masteredCount = userState.masteredQuestionIds.length;
+      const failedCount = userState.failedQuestionIds.length;
+
+      // Estimated Grade (0.0 to 10.0)
+      const grade = Math.min(10.0, (masteredCount / totalQuestions) * 10.0).toFixed(1);
+      document.getElementById('heroGradeText').textContent = grade;
+
+      // Circle SVG Progress (circumference = 2 * PI * 40 = 251.32)
+      const circumference = 251.32;
+      const progressOffset = (masteredCount / totalQuestions) * circumference;
+      const circle = document.getElementById('heroProgressCircle');
+      if (circle) {
+        circle.setAttribute('stroke-dasharray', `${progressOffset} ${circumference}`);
+        if (grade >= 9.0) {
+          circle.style.stroke = 'var(--duo-yellow-dark)';
+        } else {
+          circle.style.stroke = 'var(--duo-green)';
+        }
+      }
+
+      // Metrics
+      document.getElementById('metricMastered').textContent = masteredCount;
+      document.getElementById('metricInReview').textContent = failedCount;
+
+      const accuracy = userState.totalAttempts > 0 
+        ? Math.round((userState.totalCorrect / userState.totalAttempts) * 100) 
+        : 0;
+      document.getElementById('metricAccuracy').textContent = `${accuracy}%`;
+      document.getElementById('metricSimulators').textContent = userState.simulatorsPassed;
+
+      // Unit Breakdown list
+      const breakdownContainer = document.getElementById('unitBreakdownList');
+      if (breakdownContainer) {
+        breakdownContainer.innerHTML = '';
+        for (let u = 1; u <= 6; u++) {
+          const uQuestions = ALL_QUESTIONS.filter(q => q.unit === u);
+          const uMastered = uQuestions.filter(q => userState.masteredQuestionIds.includes(q.id)).length;
+          const uPct = Math.round((uMastered / uQuestions.length) * 100);
+
+          const row = document.createElement('div');
+          row.className = 'unit-progress-row';
+          row.innerHTML = `
+            <div class="unit-progress-info">
+              <span>${uQuestions[0].unit_name}</span>
+              <span>${uMastered}/${uQuestions.length} (${uPct}%)</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: ${uPct}%"></div>
+            </div>
+          `;
+          breakdownContainer.appendChild(row);
+        }
+      }
+
+      // Certificate
+      const certBox = document.getElementById('certificateBox');
+      const certMsg = document.getElementById('certificateMsg');
+      if (masteredCount === totalQuestions && userState.simulatorsPassed >= 1) {
+        certBox.style.background = 'linear-gradient(135deg, #d7ffb8, #b8f28b)';
+        certBox.style.borderColor = 'var(--duo-green-dark)';
+        certMsg.innerHTML = `
+          <strong style="color: #276702; font-size: 18px;">🏆 ¡GARANTÍA DE DIEZ CONSEGUIDA!</strong><br>
+          Has dominado el 100% de los 52 conceptos clave del temario y superado el simulacro oficial.<br>
+          Estás 100% preparado para sacar un 10 en el Control de la Práctica 1 de Sistemas Inteligentes.
+        `;
+      } else {
+        certBox.style.background = 'linear-gradient(135deg, #fff9e6, #fff2cc)';
+        certBox.style.borderColor = 'var(--duo-yellow-dark)';
+        certMsg.innerHTML = `Llevas ${masteredCount} de ${totalQuestions} preguntas dominadas. ¡Completa las ${totalQuestions - masteredCount} restantes para desbloquear la Garantía de Diez!`;
+      }
+    }
+
+    /* ============================================================
+       VAULT (BAÚL DE REPASO) UI
+       ============================================================ */
+    function updateVaultUI() {
+      const count = userState.failedQuestionIds.length;
+      document.getElementById('vaultCount').textContent = count;
+      document.getElementById('vaultGraduatedCount').textContent = userState.graduatedQuestionIds.length;
+
+      const listContainer = document.getElementById('failedItemList');
+      if (!listContainer) return;
+      listContainer.innerHTML = '';
+
+      if (count === 0) {
+        listContainer.innerHTML = `
+          <div style="text-align: center; color: var(--duo-text-secondary); padding: 20px;">
+            🎉 ¡No tienes ninguna pregunta fallada pendiente! Tu baúl está completamente limpio.
+          </div>
+        `;
+        return;
+      }
+
+      userState.failedQuestionIds.forEach(id => {
+        const q = ALL_QUESTIONS.find(item => item.id === id);
+        if (!q) return;
+
+        const card = document.createElement('div');
+        card.className = 'failed-item-card';
+        card.innerHTML = `
+          <div class="failed-item-header">
+            <span>${q.unit_name.toUpperCase()}</span>
+            <span>PENDIENTE DE FIJACIÓN</span>
+          </div>
+          <div class="failed-item-question">${q.question}</div>
+        `;
+        card.onclick = () => {
+          launchQuizSession([q], 'REPASO PUNTUAL', 'vault', null);
+        };
+        listContainer.appendChild(card);
+      });
+    }
+
+    /* ============================================================
+       CONFETTI EFFECT (CANVAS)
+       ============================================================ */
+    function triggerConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#58cc02', '#1cb0f6', '#ff4b4b', '#ffc800', '#ce82ff'];
+
+      for (let i = 0; i < 80; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.8) * 18,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1
+        });
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = false;
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.4; // gravity
+          p.alpha -= 0.015;
+
+          if (p.alpha > 0) {
+            alive = true;
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            ctx.restore();
+          }
+        });
+
+        if (alive) {
+          requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      render();
+    }
+
+    /* ============================================================
+       KEYBOARD SHORTCUTS (1, 2, 3, 4 OR ENTER)
+       ============================================================ */
+    window.addEventListener('keydown', (e) => {
+      if (document.getElementById('quizOverlay').style.display === 'flex') {
+        if (['1', '2', '3', '4'].includes(e.key)) {
+          selectOption(parseInt(e.key) - 1);
+        } else if (['a', 'b', 'c', 'd'].includes(e.key.toLowerCase())) {
+          const map = { 'a': 0, 'b': 1, 'c': 2, 'd': 3 };
+          selectOption(map[e.key.toLowerCase()]);
+        } else if (e.key === 'Enter') {
+          const modal = document.getElementById('explanationModal');
+          if (modal && modal.style.display === 'flex') {
+            closeExplanationModal();
+          } else {
+            handleFooterAction();
+          }
+        } else if (e.key === 'Escape') {
+          const modal = document.getElementById('explanationModal');
+          if (modal && modal.style.display === 'flex') {
+            closeExplanationModal();
+          }
+        }
+      }
+    });
+
+    // Initialize UI on load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateHeaderUI();
+      updateDashboardUI();
+      updateVaultUI();
+    });
+  </script>
+</body>
+</html>
